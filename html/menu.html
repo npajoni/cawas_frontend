@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang='es'>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <title>HotGo Backend</title>
+        <!-- CSS files -->
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/bootstrap-hotGo.css"> 
+        <!--[if lt IE 9]>
+        ipt src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!-- Javascript -->
+        
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </head>
+    <body>
+       <!-- HEADER -->
+        <div class="container-fluid unpad">
+              <div class="row unpad">
+                    <div class="col-xs-12 col-md-12 col-lg-12 unpad">
+                        <div class="topHeader">
+                            <div class="logo-img">
+                                <img src="images/logo_hotgo.png">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-12 col-lg-12 unpad">
+                        <div class="subHeader">
+                            <div class="notifications">
+                               <span class="glyphicon glyphicon-exclamation-sign GLY-med">
+                               </span> Hay 0 contenidos sin publicar.
+                               <button class="btn btn-lg btn-primary btn-block logOFF" type="button" id="exitBtn">SALIR</button>
+                            </div>
+
+                        </div>
+                    </div>
+              </div>
+        </div>
+        <!-- HEADER END -->
+        
+        <!-- CONTENT -->
+        <div class="container">  
+               
+              <div class="row">
+                       <!-- left col -->
+                        <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big">
+                            <h1>Manejar contenido</h1>
+                            <h3>Elige un contenido para editarlo, borrarlo o publicarlo.</h3>
+                            <div class="search-block">
+                                <h2>BUSCAR:</h2>
+                                <hr>
+                                <row>
+                                    <div class="col-xs-12 col-md-2 col-lg-2 ">
+                                        Por <span class="boldIt">ID</span>
+                                    </div>
+                                    <div class="col-xs-11 col-md-9 col-lg-9 ">
+                                        <div>
+                                            <input type="text" class="form-control fLEFT" id="InputUser" placeholder="Ingresa ID" name="ID-searchr">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1 col-md-1 col-lg-1 ">
+                                        <span class="glyphicon glyphicon-search GLY-search fRIGHT" ></span>
+                                    </div>
+                                    
+                                </row>
+                                <div class="fNONE"><hr></div>
+                                
+                                <row class="sepBOT">
+                                    <div class="col-xs-12 col-md-3 col-lg-3 ">
+                                        Por <span class="boldIt">STATUS</span>
+                                    </div>
+                                    <div class="col-xs-3 col-md-2 col-lg-2 ">
+                                        <div>
+                                            <span class="glyphicon glyphicon-check GLY-big"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 col-md-7 col-lg-7 sepBOT">
+                                        <a href="grid-view.html?select=pending">Ver todos los pendientes de publicación</a>
+                                    </div>
+                                </row>
+                                <div class="fNONE"><hr></div>
+                                <row class="sepBOT">
+                                    <div class="col-xs-12 col-md-3 col-lg-3 ">
+                                        Por <span class="boldIt">TIPO</span>
+                                    </div>
+                                    <div class="col-xs-3 col-md-2 col-lg-2 sepBOT">
+                                        <div>
+                                           <span class="glyphicon glyphicon-film GLY-big"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 col-md-7 col-lg-7 sepBOT">
+                                        <a href="grid-view.html?select=movies">Ver todas las movies cargadas</a>
+                                    </div>
+                                </row>
+                                <div class="fNONE"></div>
+                                <row>
+                                    <div class="col-xs-12 col-md-3 col-lg-3 ">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-xs-3 col-md-2 col-lg-2 sepBOT">
+                                        <div>
+                                          <span class="glyphicon glyphicon-list-alt GLY-big"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 col-md-7 col-lg-7 sepBOT">
+                                        <a href="grid-view.html?select=series">Ver todas las series/capítulos cargados</a>
+                                    </div>
+                                </row>
+                                <div class="fNONE"></div>
+                                <row>
+                                    <div class="col-xs-12 col-md-3 col-lg-3 ">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-xs-3 col-md-2 col-lg-2 sepBOT">
+                                        <div>
+                                          <span class="glyphicon glyphicon-align-justify GLY-big"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 col-md-7 col-lg-7 sepBOT">
+                                        <a href="grid-view.html?select=bloques"> Ver todos los bloques cargados</a>
+                                    </div>
+                                </row>
+                                <div class="fNONE"></div>
+                                <row>
+                                    <div class="col-xs-12 col-md-3 col-lg-3 ">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-xs-3 col-md-2 col-lg-2 sepBOT">
+                                        <div>
+                                          <span class="glyphicon glyphicon-user GLY-big"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 col-md-7 col-lg-7 sepBOT">
+                                        <a href="grid-view.html?select=chicas">Ver todas las chicas cargadas</a>
+                                    </div>
+                                </row>
+                                <div class="fNONE"></div>
+                            </div>
+                            
+                        </div>
+                        
+                        <!-- right col -->
+                        <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big">
+                            <h1>Cargar contenido</h1>
+                            <div class="helpICON fRIGHT">
+                                <a href="#" data-toggle="tooltip" title="Selecciona el tipo de contenido que quieres dar de alta en HOT-GO. Ten en cuenta que para agregar un capítulo en una serie la misma debe estar dada de alta previamente.">
+                                    <span class="glyphicon glyphicon-question-sign"></span>
+                                </a>
+                            </div>
+                            <h3>Elige el tipo de contenido</h3>
+                            <div class="content-picker">
+                                <form method="post" action="" name="content-pickerForm"  class="content-picker">
+                                    <select id="content-select" class="form-control">
+                                        <option></option>
+                                        <option value="movies">MOVIES</option>
+                                        <option value="series">SERIES/CAPÍTULOS</option>
+                                        <option value="bloques">BLOQUES</option>
+                                        <option value="chicas">CHICAS</option>
+                                        <option value="categorias">CATEGORÍAS</option>
+                                    </select>
+                                </form>
+                            </div>
+                            
+                        </div>
+              </div>
+              
+        </div>
+        <!-- CONTENT END -->
+        <footer>
+            Copyright 2017 ITCorp.
+        </footer>
+        
+    <!-- Javascript -->
+    <script src="js/menu.js"></script>
+    
+    </body>
+</html>
