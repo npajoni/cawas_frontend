@@ -18,7 +18,7 @@ $( document ).ready(function() {
             {
                 console.log( "clickedVal="+clickedVal ); // debug
                 $( "#movieID" ).val(clickedVal);// Agrega el ID en el input field
-                changeVideo(clickedVal, "#repro1");
+                changeVideo(clickedVal, "#repro1");// Cambia el video de acuerdo al ID. la función está en la línea 135. Construye la url relativa del video con la variable path+ID+'.mp4'
                 
             }
         });
@@ -116,7 +116,7 @@ $( document ).ready(function() {
     });
     
     
-    // checkbox idiomas
+    // checkbox idiomas detecta lo que se chequea y muestra el módulo de idioma
     $("input[type=checkbox]").on('change', function () {
         var self = $(this);
         var showDiv = "#Module_"+self.attr("id");
@@ -125,7 +125,7 @@ $( document ).ready(function() {
             $(showDiv).show('slow');
         } else {
             console.log("Id = " + self.attr("id") + "is Unchecked ");
-            $(showDiv).hide();
+            $(showDiv).hide('fast');
         }
         
     });
@@ -152,7 +152,7 @@ $( document ).ready(function() {
                 $input.next().attr("src", event.target.result);
             };
             reader.onerror = function(event) {
-                alert("I AM ERROR: " + event.target.error.code);
+                alert("ERROR: " + event.target.error.code);
             };
             reader.readAsDataURL(inputFile);
     }
