@@ -18,6 +18,27 @@
         <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Confirmar salida</h4>
+      </div>
+      <div class="modal-body">
+        ¿Está seguro que desea salir de esta aplicación?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="getOut">Si, deseo salir</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal end -->       
+      
        <!-- HEADER -->
         <div class="container-fluid unpad">
               <div class="row unpad">
@@ -34,7 +55,7 @@
                             <div class="notifications ">
                                 <a href="menu.html"><span class="glyphicon glyphicon-home GLY-med">
                                </span> &nbsp;volver al menú</a>
-                               <button class="btn btn-lg btn-primary btn-block logOFF" type="button" id="exitBtn">SALIR</button>
+                               <button class="btn btn-lg btn-primary btn-block logOFF" type="button" id="exitBtn" data-toggle="modal" data-target="#myModal">LOG-OUT</button>
                             </div>
 
                         </div>

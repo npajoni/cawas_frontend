@@ -5,9 +5,9 @@ $( document ).ready(function() {
     var clickedVal; // recoge el valor del ID seleccionado en la lista de movies;
     
     // simular exit con el botó de salir
-    $("#exitBtn").click(function(){
+    $("#getOut").click(function(){
            window.location.href = "index.html?logstatus=OFF";
-       })
+    })
     
     // Toma el ID de la movie seleccionada en la lista
     $( "#movie-select" ).change(function() {

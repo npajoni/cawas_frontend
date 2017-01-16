@@ -710,6 +710,24 @@ hr{
 
 .tooltip > .tooltip-inner {text-align: left;}
 
+
+/* MODAL */
+.modal-header {
+	background-color:#555;
+    border-bottom: 1px solid #333333;
+}
+.modal-body {
+	background-color:#555;
+    border-top: 1px solid #6d6d6d;
+}
+
+.modal-footer {
+	background-color:#555;
+    border-top:none;
+    border-bottom: none;
+}
+
+
 /* Header */
 
 .topHeader{
@@ -816,6 +834,27 @@ footer{
     color:#ccc;
     padding-top: 5px;
     cursor:pointer;
+}
+
+#STAT:hover #glySTAT{
+    color:#93dfff!important;
+    text-shadow: 1px 1px 4px #000; 
+}
+#TIPO:hover #glyTIPO{
+    color:#93dfff!important;
+    text-shadow: 1px 1px 4px #000;
+}
+#SERIE:hover #glySERIE{
+    color:#93dfff!important;
+    text-shadow: 1px 1px 4px #000;
+}
+#BLOQ:hover #glyBLOQ{
+    color:#93dfff!important;
+    text-shadow: 1px 1px 4px #000;
+}
+#CHIC:hover #glyCHIC{
+    color:#93dfff!important;
+    text-shadow: 1px 1px 4px #000;
 }
 
 .boldIt{
@@ -984,6 +1023,38 @@ ul.generoPick li.placeholder {
 .hid{
     display:none;
 }
+
+
+/* GRID VIEW */
+.top6{
+    margin-top:6px!important;
+}
+
+.table { 
+    display: table; 
+}
+
+.tb-header{
+    background-color:#1e1e1e!important;
+}
+.tb-row { 
+    display: table-row;
+}
+
+.tb-row:nth-child(odd) {
+    background-color: #333;
+}
+
+.tb-cell { 
+    display: table-cell;
+    border: 1px dotted #222;
+    padding: 2px 4px;
+}
+
+.tb-btn  {
+    padding: 1px 10px!important;
+}
+
 
 /*media queries */
 @media (max-width: 767px) {
