@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang='es'>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <title>HotGo Backend</title>
+        <!-- CSS files -->
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/bootstrap-hotGo.css"> 
+        <!--[if lt IE 9]>
+        ipt src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!-- Javascript -->
+        
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="js/jquery-sortable.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </head>
+    <body>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Confirmar salida</h4>
+      </div>
+      <div class="modal-body">
+        ¿Está seguro que desea salir de esta aplicación?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="getOut">Si, deseo salir</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal end -->       
+      
+       <!-- HEADER -->
+        <div class="container-fluid unpad">
+              <div class="row unpad">
+                    <div class="col-xs-12 col-md-12 col-lg-12 unpad">
+                        <div class="topHeader">
+                            <div class="logo-img">
+                                <img src="images/logo_hotgo.png">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-12 col-lg-12 unpad">
+                        <div class="subHeader">
+                            <div class="notifications ">
+                                <a href="menu.html"><span class="glyphicon glyphicon-home GLY-med">
+                               </span> &nbsp;volver al menú</a>
+                               <button class="btn btn-lg btn-primary btn-block logOFF" type="button" id="exitBtn" data-toggle="modal" data-target="#myModal">LOG-OUT</button>
+                            </div>
+
+                        </div>
+                    </div>
+              </div>
+        </div>
+        <!-- HEADER END -->
+        
+        <!-- CONTENT -->
+        <div class="container">  
+               
+              <div class="row">
+                       <!-- left col -->
+                       <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big">
+                           
+                            <h1>EDITAR bloque</h1>
+                            <div>
+                                <h3>Selecciona un bloque de la lista para editarlo</h3>
+                            </div>
+                            
+                            <div>
+                            
+                                   <!-- ------------------Reemplazar por listado de bloques ----------------- -->
+                                      
+                                    <select id="bloque-select" class="form-control" size="6">
+                                        <option value="122209">Negras</option>
+                                        <option value="122211">Lesbianas calientes</option>
+                                        <option value="122212">Lesbianas templadas</option>
+                                        <option value="122213">Especial día del niño</option>
+                                        <option value="122214">Negros intimidantes</option>
+                                        <option value="122215">Perras en ojotas</option>
+                                        <option value="122216">Gordas valijas</option>
+                                    </select>
+                                    
+                                  <!-- ---------------------- Fin de  listado de bloques ------------------- -->
+                            </div>
+                            
+                            <div>
+                               <form method="get" action="edit-bloques.html" name="bloque-pickerForm" id="bloque-pickerForm" class="content-picker movieChoose">
+                                   
+                                   <div class="col-xs-12 col-md-8 col-lg-8">       
+                                       <input type="text" class="form-control" name="selectedName" id="bloqueNAME" value="">
+                                       <input type="hidden" class="form-control" name="selectedID" id="bloqueID" value="">
+
+                                   </div>
+                                   <div class="col-xs-12 col-md-4 col-lg-4">       
+                                       <button class="btn btn-primary btn-block form-control" type="button" id="IDBtn">Editar</button>
+                                   </div>
+                                   
+                                </form>
+                            </div>
+                       </div> 
+                       
+                        
+                      <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big">
+                           <div class="col-xs-12 col-md-12 col-lg-12 alignRIGHT-lg">
+                               <h1>AGREGAR bloque <span class="glyphicon glyphicon-question-sign helpICON" data-toggle="tooltip" title="Un bloque es un conjunto de movies, series o chicas agrupados con un fin especial (destacados, etc)."></span></h1>
+                               
+                           </div>
+                           <div class="col-xs-12 col-md-4 col-lg-4 btnOnly fRIGHT-lg">       
+                                <button class="btn btn-primary btn-block form-control" type="button" id="ADBtn">Nuevo bloque</button>
+                           </div>
+                      </div>
+                                        
+              </div>
+              
+        </div>
+        
+ 
+        
+        <!-- CONTENT END -->
+        <footer>
+            Copyright 2017 ITCorp.
+        </footer>
+        
+    <!-- Javascript -->
+    <script src="js/bloques.js"></script>
+    
+    </body>
+</html>

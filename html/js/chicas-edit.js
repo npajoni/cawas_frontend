@@ -16,6 +16,8 @@ function getParameterByName(name, url) {
 $( document ).ready(function() {
     
     console.log( "ready!" );
+    // inicializar tooltips para los íconos de HELP
+    $('[data-toggle="tooltip"]').tooltip(); 
     
     // pega el ID de la chica que viene por GET
     $(".idLegend").html(selectedID);
