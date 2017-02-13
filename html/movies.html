@@ -12,7 +12,16 @@
         ipt src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         <!-- Javascript -->
-        
+        <script>
+            
+            /*---------------------------------------
+            REEMPLAZAR EL VALOR DE ESTA VARIABLE PARA 
+            DAR UN STATUS AL USUARIO LUEGO DEL POST 
+            ---------------------------------------*/
+            
+            var resultado = ""; // cambiar por "error" si hubo algún problema o por "success" en caso de éxito
+            
+        </script>
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script src="js/jquery-sortable.js"></script>
@@ -58,7 +67,44 @@
     </div>
   </div>
 </div>
-<!-- Modal 2 end -->                   
+<!-- Modal 2 end -->
+     
+<!-- Modal 3-->
+<div class="modal fade" id="myModal-OK" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Movie grabada exitosamente</h4>
+      </div>
+      <div class="modal-body">
+        Todos los datos han sido grabados. Puede continuar con la carga de otras movies. 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 4-->
+<div class="modal fade" id="myModal-ERROR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">¡Hubo un error!<span class="glyphicon glyphicon-warning-sign GLY-med"></span></h4>
+      </div>
+      <div class="modal-body">
+        Póngase en contacto con IT para solucionar el problema. 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal 2 end -->               
       
        <!-- HEADER -->
         <div class="container-fluid unpad">
@@ -94,7 +140,7 @@
                            
                             <h1>Nueva MOVIE</h1>
                             <div>
-                                <h3>Selecciona ID del video *</h3>
+                                <h3>Selecciona ID del video sin metadata*</h3>
                             </div>
                             <div>
                             
@@ -122,20 +168,27 @@
                                    <div class="col-xs-12 col-md-7 col-lg-7">       
                                        <input type="text" class="form-control" name="selectedID" id="movieID" value="">
                                    </div>
-                                   <div class="col-xs-12 col-md-4 col-lg-4">       
-                                       <button class="btn btn-primary btn-block form-control" type="button" id="IDBtn">Seleccionar</button>
+                                   <div class="col-xs-12 col-md-4 col-lg-4 unpad">       
+                                       <button class="btn btn-primary btn-block form-control " type="button" id="IDBtn">Seleccionar</button>
                                    </div>
                                    
                                 </form>
                             </div>
+                            
+                            <div  id="repro1">
+                               <video width="406" controls class="fRIGHT">
+                                  <source src=http://techslides.com/demos/sample-videos/small.mp4 type=video/mp4>
+                               </video> 
+                            </div>
                        </div>
                        
                        <!-- right col -->
-                       <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big"  id="repro1">
-                           <h1></h1>
-                           <video width="400" controls class="fRIGHT">
-                              <source src=http://techslides.com/demos/sample-videos/small.mp4 type=video/mp4>
-                           </video>
+                       <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big alignRIGHT-lg">
+                           <h1>Editar MOVIE</h1>
+                       </div>
+                       
+                       <div class="col-xs-12 col-md-3 col-lg-3 btnOnly fRIGHT-lg">       
+                            <button class="btn btn-primary btn-block form-control" type="button" id="EDBtn">Editar una Movie existente</button>
                        </div>
               </div>
               
@@ -160,7 +213,7 @@
                 </div>
                 
                 <!-- Form manda imagenes y vars en un JSON hecho string -->
-                <form method="post" action="" name="movie-completeForm"  class="content-picker movieChoose" id="movieForm">
+                <form method="post" action="" name="movie-completeForm"  class="content-picker movieChoose" id="movieForm" enctype="multipart/form-data">
                 
                 <!-- 2 Row : Images -->
                 <div class="row form-row">
@@ -269,11 +322,11 @@
 
                             <select type="text" class="form-control" name="canal" id="canalSelect" placeholder="Elige un canal">
                                 <option value=""> </option>
-                                <option value="playboyTv">Playboy TV</option>
-                                <option value="venus">Venus</option>
-                                <option value="sextreme">Sextreme</option>
-                                <option value="penthouse">Penthouse</option>
-                                <option value="brazzers">Brazzers</option> 
+                                <option value="1">Playboy TV</option>
+                                <option value="2">Venus</option>
+                                <option value="3">Sextreme</option>
+                                <option value="4">Penthouse</option>
+                                <option value="5">Brazzers</option> 
                             </select>
 
                             <!-- ------------------  Fin de listado de canales  ----------------- -->
@@ -286,7 +339,7 @@
                 <div class="row form-row">
                     <div class="col-xs-12 col-md-12 col-lg-12 form-group">
                         <div class="form-group has-feedback">
-                            <label class="label-left" for="elenco">Director: </label>
+                            <label class="label-left" for="director">Director: *</label>
                             <input type="text" class="form-control" name="director" id="director" autofocus>
                             <span class="glyphicon form-control-feedback"></span>
                         </div>
@@ -297,8 +350,8 @@
                 <div class="row form-row">
                     <div class="col-xs-12 col-md-12 col-lg-12 form-group">
                         <div class="form-group has-feedback">
-                            <label class="label-left" for="elenco">Año de estreno (AAAA): </label>
-                            <input type="text" class="form-control" name="releaseYear" id="releaseYear" autofocus>
+                            <label class="label-left" for="releaseYear">Año de estreno (AAAA): *</label>
+                            <input type="number" class="form-control" name="releaseYear" id="releaseYear" autofocus>
                             <span class="glyphicon form-control-feedback"></span>
                         </div>
                     </div>
@@ -321,16 +374,18 @@
                 <!--  9 : Idioma -->
                 <div class="row form-row">
                     <div class="col-xs-12 col-md-3 col-lg-3 form-group">
-                        <div class="form-group has-feedback">
-                            <label class="label-left" for="elenco">Elija idioma: *</label>
-                            <div class="helpright"><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Debe elejir al menos un idioma para dar de alta la movie."></span></div>
-
-                            <div class="form-group">
+                        <div class="form-group has-feedback" id="lang-container">
+                            <div id="pickLang">
+                                <label class="label-left" for="idioms">Elija idioma: (al menos uno)*</label>
+                                
+                            </div>
+                            <span class="glyphicon form-control-feedback"></span>
+                            <div class="form-group has-feedback">
                                 <input type="checkbox" name="idioma" value="spa" id="spa" class="chkbx"> Español<br>
                                 <input type="checkbox" name="idioma" value="por" id="por" class="chkbx"> Portugués<br>
                                 <input type="checkbox" name="idioma" value="eng" id="eng" class="chkbx"> Inglés<br>
                             </div>
-                            <span class="glyphicon form-control-feedback"></span>
+                            
                         </div>
                     </div>
                 </div>
