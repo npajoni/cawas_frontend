@@ -883,7 +883,7 @@ footer{
     font-size: 11px;
 }
 .movieChoose{
-    margin-top:40px;
+    margin-top:10px;
 }
 
 .btn-primary:hover, .btn-primary:focus {
@@ -893,6 +893,15 @@ footer{
 video{
         /*margin-top: 86px;*/
         max-height:229px;
+}
+
+#movie-edit{
+    /*width:90%!important;*/
+}
+
+#movieName{
+    width:84%;
+    float:right;
 }
 
 #repro1{

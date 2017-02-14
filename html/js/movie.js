@@ -18,16 +18,15 @@ $( document ).ready(function() {
     var langQ = 0; //Cuenta la cantidad de idiomas elegidos por el usuario
     var langDesc = [] // recoge qué idiomas son los que se seleccionaron
     var clickedVal; // recoge el valor del ID seleccionado en la lista de movies;
+    var clickedText; // recoge el nombre seleccionado en la lista de edición de movies;
+    var clickedTextID; // recoge el ID nombre seleccionado en la lista de edición de movies;
     
     // simular exit con el botó de salir
     $("#getOut").click(function(){
            window.location.href = "index.html?logstatus=OFF";
     })
     
-    // simular exit con el botó de salir
-    $("#EDBtn").click(function(){
-           window.location.href = "movie-edit.html";
-    })
+    
     
     // Toma el ID de la movie seleccionada en la lista
     $( "#movie-select" ).change(function() {
@@ -44,6 +43,26 @@ $( document ).ready(function() {
         });
         
     });
+    
+    // Toma el nombre de la movie seleccionada en la lista
+    $( "#movie-edit" ).change(function() {
+        
+        $( "#movie-edit option:selected" ).each(function() {
+            clickedText = $(this).html();
+            clickedTextID = $(this).val();
+            if(clickedText!="")
+            {
+                $( "#movieName" ).val(clickedText);// Agrega el ID en el input field
+                               
+            }
+        });
+        
+    });
+    
+    // simular exit con el botó de salir
+    $("#EDBtn").click(function(){
+           window.location.href = "movies-edit.html?ID="+clickedTextID;
+    })
     
     // interacción del usuario al hacer click en el botón debajo de la lista de selección
     $( "#IDBtn" ).click(function(){ 
@@ -469,21 +488,6 @@ $( document ).ready(function() {
                     myJSON+='"categories":'+myCategories+',';
                     myJSON+='"Moviesmetadata": [';
                     myJSON+= addMovieMetadata(langDesc);
-                    /*
-                    myJSON+='{"Moviemetadata":';
-                    myJSON+='{"language": "es",';
-                    myJSON+='"title": "title 1 español",';
-                    myJSON+='"summary_short": "summary_short 1 ",';
-                    myJSON+='"summary_long":"summary_long 1 "';
-                    myJSON+='}}';
-                    myJSON+=',';
-                    myJSON+='{"Moviemetadata":';
-                    myJSON+='{"language": "pt",';
-                    myJSON+='"title": "title 2 portugues",';
-                    myJSON+='"summary_short": "summary_short 2 ",';
-                    myJSON+='"summary_long":"summary_long 2 "';
-                    myJSON+='}}'; 
-                    */
                     myJSON+=']}}';
                     console.log(myJSON);
                     $("#varsToJSON").val(myJSON);
