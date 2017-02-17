@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="css/bootstrap-hotGo.css"> 
         <link rel="stylesheet" href="css/dcalendar.picker.css">
+        <link rel="stylesheet" href="css/duration-picker.css">
+        <link rel="stylesheet" href="css/select2.css">
         <!--[if lt IE 9]>
         ipt src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -21,12 +23,21 @@
             
             var resultado = ""; // cambiar por "error" si hubo algún problema o por "success" en caso de éxito
             
+            
+             //year check
+            function maxLengthCheck(object)
+              {
+                if (object.value.length > 4)
+                  object.value = object.value.slice(0, 4)
+              }
         </script>
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script src="js/jquery-sortable.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/dcalendar.picker.js"></script>
+        <script src="js/duration-picker.min.js"></script>
+        <script src="js/select2.min.js"></script>
     </head>
     <body>
 
@@ -205,11 +216,11 @@
 
                                       <!-- ---------------------- Fin de  listado de movies ------------------- -->
                            </div>
-                           <div class="col-xs-12 col-md-8 col-lg-8 ">       
+                           <div class="col-xs-12 col-md-8 col-lg-8 movieChoose">       
                                 <input type="text" class="form-control" name="selectedEdit" id="movieName" value="">
-                            </div>
+                           </div>
                            <div class="col-xs-12 col-md-4 col-lg-4 fRIGHT-lg unpad">       
-                                <button class="btn btn-primary btn-block form-control" type="button" id="EDBtn">Editar Movie</button>
+                                <button class="btn btn-primary btn-block form-control movieChoose" type="button" id="EDBtn">Editar Movie</button>
                            </div>
                            
                        </div>
@@ -243,7 +254,7 @@
                 <div class="row form-row">
                     <div class="col-xs-4 col-md-4 col-lg-4 form-group">
                        <div class="form-group has-feedback imgUpload">
-                            <label class="label-left" for="ThumbHor" id="ThumbHorTit">Asociar Thumbnail horizontal: *</label>
+                            <label class="label-left" for="ThumbHor" id="ThumbHorTit">Asociar imagen landscape: *</label>
                             <input type="file" class="form-control" name="ThumbHor" id="ThumbHor" accept="image/*">
                             <span class="glyphicon form-control-feedback"></span>
                             <img id="imageH"/>
@@ -253,7 +264,7 @@
                     </div>
                     <div class="col-xs-4 col-md-4 col-lg-4 form-group" >
                        <div class="form-group has-feedback imgUpload">
-                            <label for="ThumbVer" id="ThumbVerTit">Asociar Thumbnail vertical: *</label>
+                            <label for="ThumbVer" id="ThumbVerTit">Asociar imagen portrait: *</label>
                             <input type="file" class="form-control" name="ThumbVer" id="ThumbVer" accept="image/*">
                             
                             <span class="glyphicon form-control-feedback"></span>
@@ -337,15 +348,15 @@
 
                 <!-- 5 Row : Canal pick -->
                 <div class="row form-row">
-                    <div class="col-xs-12 col-md-8 col-lg-8 form-group">
-                        <div class="form-group has-feedback">
-                            <label class="label-left" for="elenco">Canal: *</label>
+                    <div class="col-xs-12 col-md-4 col-lg-4 form-group">
+                        <div class="form-group has-feedback" id="channelSelect">
+                            <label class="label-left" for="canal">Canal: *</label>
                             <div class="helpright"><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Selecciona el canal al que pertenece esta movie (ej: Venus)"></span></div>
 
                             <!-- ------------------Reemplazar por listado de canales ----------------- -->
 
-                            <select type="text" class="form-control" name="canal" id="canalSelect" placeholder="Elige un canal">
-                                <option value=""> </option>
+                            <select type="text" class="form-control" name="canal" id="canalSelect">
+                                <option value="0"> </option>
                                 <option value="1">Playboy TV</option>
                                 <option value="2">Venus</option>
                                 <option value="3">Sextreme</option>
@@ -357,9 +368,27 @@
                             <span class="glyphicon form-control-feedback"></span>
                         </div>
                     </div>
+                    
+                    <div class="col-xs-12 col-md-4 col-lg-4 form-group">
+                        <div class="form-group has-feedback">
+                            <label class="label-left" for="releaseYear">Año de estreno (AAAA): *</label>
+                            <input type="number" class="form-control" name="releaseYear" id="releaseYear" min="1890" max="2300" oninput="maxLengthCheck(this)" >
+                            <span class="glyphicon form-control-feedback"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xs-12 col-md-4 col-lg-4 form-group">
+                        <div class="form-group has-feedback">
+                            <label class="label-left" for="releaseYear">Display runtime (mm:ss): *</label>
+                            <input type="text" class="form-control" name="runtime" id="runtime" autofocus>
+                            <span class="glyphicon form-control-feedback"></span>
+                        </div>
+                    </div>
+                    
                 </div>
 
-                <!-- 6 Row : Director pick -->
+                              
+                <!-- 7 Row : Director pick -->
                 <div class="row form-row">
                     <div class="col-xs-12 col-md-12 col-lg-12 form-group">
                         <div class="form-group has-feedback">
@@ -370,16 +399,7 @@
                     </div>
                 </div>
                 
-                <!-- 7 Row : year pick -->
-                <div class="row form-row">
-                    <div class="col-xs-12 col-md-12 col-lg-12 form-group">
-                        <div class="form-group has-feedback">
-                            <label class="label-left" for="releaseYear">Año de estreno (AAAA): *</label>
-                            <input type="number" class="form-control" name="releaseYear" id="releaseYear" autofocus>
-                            <span class="glyphicon form-control-feedback"></span>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <!-- 8 Row : Elenco -->
                 <div class="row form-row">

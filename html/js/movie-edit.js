@@ -15,55 +15,32 @@ $( document ).ready(function() {
     var checkVal=0; //chequea la cantidad de errores en el formulario
     var clickedToSubmit = 0; //chequea si el botón de submit se ha presionado
     var checkText="";
-    var display_runtimeJSON; //necesaria para armar el valor final que debe ir en el JSON
     var langQ = 0; //Cuenta la cantidad de idiomas elegidos por el usuario
     var langDesc = [] // recoge qué idiomas son los que se seleccionaron
     var clickedVal; // recoge el valor del ID seleccionado en la lista de movies;
-    var clickedText; // recoge el nombre seleccionado en la lista de edición de movies;
-    var clickedTextID; // recoge el ID nombre seleccionado en la lista de edición de movies;
+    var clickedTxt = "";//recoge el valor del nombre seleccionado por el usuario;
+    var responseJSON;// recoge el JSON de la movie que se carga al seleccionarla.
     
-    // activar los selects con filtro
-    $("#movie-select").select2({placeholder: "Despliega la lista"});
-    $("#movie-edit").select2({placeholder: "Despliega la lista"});
-    var $myVerifSelect = $("#canalSelect").select2();
-    
-    // activar timepicker
-    $("#runtime").durationPicker({
-      /*hours: {
-        label: "h",
-        min: 0,
-        max: 24
-      },*/
-      minutes: {
-        label: ":",
-        min: 0,
-        max: 120
-      },
-      seconds: {
-        label: "",
-        min: 0,
-        max: 59
-      },
-      classname: 'form-control',
-      responsive: true
-    });
-    
-    // simular exit con el botón de salir
+    // simular exit con el botó de salir
     $("#getOut").click(function(){
            window.location.href = "index.html?logstatus=OFF";
     })
     
-    
+    // vuelve a movies
+    $("#backBtn").click(function(){
+           window.location.href = "movies.html";
+    })
     
     // Toma el ID de la movie seleccionada en la lista
     $( "#movie-select" ).change(function() {
         
         $( "#movie-select option:selected" ).each(function() {
           clickedVal= $(this).val();
+          clickedTxt= $(this).html();
             if(clickedVal!="")
             {
                 console.log( "clickedVal="+clickedVal ); // debug
-                $( "#movieID" ).val(clickedVal);// Agrega el ID en el input field
+                $( "#movieID" ).val(clickedTxt);// Agrega el ID en el input field
                 changeVideo(clickedVal, "#repro1");// Cambia el video de acuerdo al ID. la función está en la línea 135. Construye la url relativa del video con la variable path+ID+'.mp4'
                 
             }
@@ -71,31 +48,31 @@ $( document ).ready(function() {
         
     });
     
-    // Toma el nombre de la movie seleccionada en la lista
-    $( "#movie-edit" ).change(function() {
-        
-        $( "#movie-edit option:selected" ).each(function() {
-            clickedText = $(this).html();
-            clickedTextID = $(this).val();
-            if(clickedText!="")
-            {
-                $( "#movieName" ).val(clickedText);// Agrega el ID en el input field
-                               
-            }
-        });
-        
-    });
-    
-    // simular exit con el botó de salir
-    $("#EDBtn").click(function(){
-           window.location.href = "movies-edit.html?ID="+clickedTextID;
-    })
-    
     // interacción del usuario al hacer click en el botón debajo de la lista de selección
     $( "#IDBtn" ).click(function(){ 
-        $( "#idTit" ).html("AGREGANDO ID: "+clickedVal);// Agrega el ID en el título
+        $( "#idTit" ).html("AGREGANDO ID: "+clickedVal);// Agrega el nombre en el título.
+        sendID(clickedVal);
         $( "#hidden1" ).show();
     })
+    
+    // función para POSTEAR por ajax un ID y tomar el JSON recibido y parsearlo
+    
+    function sendID(ID){
+        $.ajax({
+          method: "POST",
+          url: "movie_data.json",
+          data: { id: ID }
+        })
+          .done(function( Json ) {
+            responseJSON=Json;
+            console.log( "movie ID: " +  responseJSON.Movie.asset_id);
+            $( "#orginalTitle" ).val(responseJSON.Movie.original_title);
+            $( "#hidden1" ).show();
+          });
+    }
+    
+    
+    
     
     //preview de imagenes cargadas por el front end
     
@@ -243,13 +220,6 @@ $( document ).ready(function() {
     }
     
     
-    //year check
-    function maxLengthCheck(object)
-      {
-        if (object.value.length > 4)
-          object.value = object.value.slice(0, 4)
-      }
-    
     /* triggers for checkALL function */
     $("#sendBut").click(function(){
         clickedToSubmit=1;
@@ -275,7 +245,6 @@ $( document ).ready(function() {
         var categories_selected = [];
         var director_selected = $('#director').val();
         var elenco_selected = $('#elenco').val();
-        var display_runtime = $('#runtime').val();
         var year_selected = $('#releaseYear').val();
         
         // chequea original Title
@@ -331,15 +300,12 @@ $( document ).ready(function() {
         }
         
         // chequea canal
-        console.log("#canalSelect"+$('#canalSelect').val());
-        if ( $('#canalSelect').val()=="0" || $('#canalSelect').val()==0)
+        if ( $('#canalSelect').val()=="")
         {
             errorMe("#canalSelect");
-            $(".select2-selection--single").css("border","1px #a94442 solid");
             checkVal++;
         }else{
             okMe("#canalSelect");
-             $(".select2-selection--single").css("border","1px #3c763d solid");
             canal_selected=$('#canalSelect').val();
         }
         
@@ -359,21 +325,6 @@ $( document ).ready(function() {
             checkVal++;
         }else{
             okMe("#releaseYear");
-        }
-        
-         // chequea display runtime
-        if(display_runtime=="" || display_runtime=="0:,0")
-        {
-            errorMe("#runtime");
-            $(".durationpicker-container").css("border","1px #a94442 solid");
-            checkVal++;
-        }else{
-            console.log("display:runtime"+display_runtime);
-            $(".durationpicker-container").css("border","1px #3c763d solid");
-            var myStrRuntime = display_runtime;
-            var myDirtyRuntime = myStrRuntime.split(",");
-            display_runtimeJSON=myDirtyRuntime[0]+myDirtyRuntime[1];
-            okMe("#runtime");
         }
         
         // chequea elenco
@@ -430,11 +381,6 @@ $( document ).ready(function() {
                 }
                 $(theField).parent().addClass('has-error');
                 $(theField).next(".glyphicon").addClass('glyphicon-remove');
-                if(theField=="#canalSelect"){
-                    console.log("canalSelect selected");
-                    $("#channelSelect").children(".select2-selection--single").css("display","none");
-                        //.css("border","1px #ff0000 solid!important");
-                }
                 
             }
         
@@ -542,7 +488,7 @@ $( document ).ready(function() {
                     myJSON+='"girls":'+myGirls+',';
                     myJSON+='"cast":"'+elenco_selected+'",';
                     myJSON+='"directors":"'+director_selected+'",';
-                    myJSON+='"display_runtime": "'+display_runtimeJSON+'",';
+                    myJSON+='"display_runtime": "20:30",';
                     myJSON+='"categories":'+myCategories+',';
                     myJSON+='"Moviesmetadata": [';
                     myJSON+= addMovieMetadata(langDesc);
