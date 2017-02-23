@@ -7,15 +7,36 @@
         <!-- CSS files -->
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="css/bootstrap-hotGo.css"> 
+        <link rel="stylesheet" href="css/dcalendar.picker.css">
+        <link rel="stylesheet" href="css/select2.css">
         <!--[if lt IE 9]>
         ipt src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         <!-- Javascript -->
+        <script>
+            
+            /*---------------------------------------
+            REEMPLAZAR EL VALOR DE ESTA VARIABLE PARA 
+            DAR UN STATUS AL USUARIO LUEGO DEL POST 
+            ---------------------------------------*/
+            
+            var resultado = ""; // cambiar por "error" si hubo algún problema o por "success" en caso de éxito
+            
+            
+             //number check
+            function maxLengthCheck(object)
+              {
+                if (object.value.length > 4)
+                  object.value = object.value.slice(0, 4)
+              }
+        </script>
         
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script src="js/jquery-sortable.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/dcalendar.picker.js"></script>
+        <script src="js/select2.min.js"></script>
     </head>
     <body>
 
@@ -37,7 +58,63 @@
     </div>
   </div>
 </div>
-<!-- Modal end -->       
+<!-- Modal end -->
+     
+<!-- Modal 2-->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">ERROR</h4>
+      </div>
+      <div class="modal-body">
+        ¡Atención! El formulario no está completo, revise los campos marcados en rojo y vuelva a intentarlo. 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal 2 end -->
+     
+<!-- Modal 3-->
+<div class="modal fade" id="myModal-OK" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Movie grabada exitosamente</h4>
+      </div>
+      <div class="modal-body">
+        Todos los datos han sido grabados. Puede continuar con la carga de otras movies. 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 4-->
+<div class="modal fade" id="myModal-ERROR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">¡Hubo un error!<span class="glyphicon glyphicon-warning-sign GLY-med"></span></h4>
+      </div>
+      <div class="modal-body">
+        Póngase en contacto con IT para solucionar el problema. 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal 2 end -->          
       
        <!-- HEADER -->
         <div class="container-fluid unpad">
@@ -70,12 +147,23 @@
               <div class="row">
                        <!-- left col -->
                        <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big">
-                           
-                            <h1>EDITAR chica</h1>
-                            <div>
-                                <h3>Selecciona una chica de la lista para editarla</h3>
+                           <div class="col-xs-12 col-md-12 col-lg-12 ">
+                               <h1>AGREGAR chica</h1>
+                           </div>
+                           <div class="col-xs-12 col-md-4 col-lg-4 btnOnly">       
+                                <button class="btn btn-primary btn-block form-control" type="button" id="ADBtn">Nueva chica</button>
+                           </div>
+                      </div>
+                        
+                       
+                      <!-- right col -->
+                      <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big">
+                           <div class="alignRIGHT-lg">
+                                <h1>EDITAR chica</h1>
+                                <div>
+                                    <h3>Selecciona una chica de la lista para editarla</h3>
+                                </div>
                             </div>
-                            
                             <div>
                             
                                    <!-- ------------------Reemplazar por listado de chicas ----------------- -->
@@ -95,7 +183,7 @@
                             </div>
                             
                             <div>
-                               <form method="get" action="edit-chicas.html" name="chica-pickerForm" id="chica-pickerForm" class="content-picker movieChoose">
+                               <form method="get" action="chicas-edit.html" name="chica-pickerForm" id="chica-pickerForm" class="content-picker movieChoose">
                                    
                                    <div class="col-xs-12 col-md-8 col-lg-8">       
                                        <input type="text" class="form-control" name="selectedName" id="chicaNAME" value="">
@@ -108,22 +196,227 @@
                                    
                                 </form>
                             </div>
-                       </div> 
-                       
-                        
-                      <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big">
-                           <div class="col-xs-12 col-md-12 col-lg-12 alignRIGHT-lg">
-                               <h1>AGREGAR chica</h1>
-                           </div>
-                           <div class="col-xs-12 col-md-4 col-lg-4 btnOnly fRIGHT-lg">       
-                                <button class="btn btn-primary btn-block form-control" type="button" id="ADBtn">Nueva chica</button>
-                           </div>
-                      </div>
+                       </div>
                                         
               </div>
               
         </div>
         
+         <!-- hidden form -->
+        <div class="container" id="hidden1">
+        
+             <div class="row">
+                       <!-- left col -->
+                       <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big">
+                           <div class="col-xs-12 col-md-12 col-lg-12">
+                            <h1>Nueva chica</h1>
+                           </div>
+                           <div class="col-xs-4 col-md-3 col-lg-3">
+                                <button class="btn btn-primary btn-block form-control" type="button" id="CancelBtn">Cancelar</button>
+                           </div>
+                       </div> 
+                                                               
+              </div>
+              
+            <!-- First Row : Title -->
+            <div class="row form-row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <label for="orginalTitle" id="idTit">NUEVO ID : </label>
+                        <!-- pegar  acá -->
+                        <span class="idLegend">
+                           
+                           
+                           <!-- pegar  acá el ID nuevo -->
+                           2121222
+                           
+                            
+                        </span>
+                    </div>
+                    <div class="form-group has-feedback">
+                      
+                      
+                        <!-- pegar en "value" el ID nuevo -->
+                        <input type="hidden" name="newID" vlaue="">
+                        <label class="label-left" for="orginalName">Nombre: *</label>
+                        <input type="text" class="form-control" name="orginalName" id="orginalName" required autofocus>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Form manda imagenes y vars en un JSON hecho string -->
+                <form method="post" action="" name="girl-completeForm"  class="content-picker movieChoose" id="girlForm" enctype="multipart/form-data">
+                
+            <!-- 2 Row : Images -->
+                <div class="row form-row">
+                    <div class="col-xs-4 col-md-4 col-lg-4 form-group">
+                       <div class="form-group has-feedback imgUpload">
+                            <label class="label-left" for="ThumbHor" id="ThumbHorTit">Asociar imagen landscape: *</label>
+                            <input type="file" class="form-control" name="ThumbHor" id="ThumbHor" accept="image/*">
+                            <span class="glyphicon form-control-feedback"></span>
+                            <img id="imageH"/>
+                            
+                            
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-md-4 col-lg-4 form-group" >
+                       <div class="form-group has-feedback imgUpload">
+                            <label for="ThumbVer" id="ThumbVerTit">Asociar imagen portrait: *</label>
+                            <input type="file" class="form-control" name="ThumbVer" id="ThumbVer" accept="image/*">
+                            
+                            <span class="glyphicon form-control-feedback"></span>
+                            <img id="imageV"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-md-4 col-lg-4">
+                    </div>
+                </div>
+
+                <input type="hidden" name="varsToJSON" id="varsToJSON" value="">
+              
+               </form>
+            
+            
+            <!-- Row 3: Fecha Nacimiento -->
+            <div class="row form-row">
+               <div class="col-xs-12 col-md-4 col-lg-4">
+                   <div class="form-group has-feedback">
+                    <label class="label-left" for="birthDate">Fecha de Nacimiento: *</label>
+                     <input type="text" class="form-control" name="birthDate" id="birthDate" required autofocus placeholder="dd-mm-aaaa">
+                   </div>
+                </div>
+            </div>
+            
+            <!-- Row 4: Altura y peso -->
+            <div class="row form-row">
+               <div class="col-xs-12 col-md-4 col-lg-4">
+                   <div class="form-group has-feedback">
+                    <label class="label-left" for="height">Altura (en mts. ej:1.60): *</label>
+                     <input type="number" class="form-control" name="height" id="height" min="0" max="3" oninput="maxLengthCheck(this)" required autofocus >
+                   </div>
+                </div>
+                
+                <div class="col-xs-12 col-md-4 col-lg-4">
+                   <div class="form-group has-feedback">
+                    <label class="label-left" for="weight">Peso (en kgs.): *</label>
+                     <input type="number" class="form-control" name="weight" id="weight" min="30" max="200" oninput="maxLengthCheck(this)" required autofocus>
+                    </div>
+                </div>
+            </div>
+           
+            <!-- Row 5: Categoría -->
+            <div class="row form-row">
+               <div class="col-xs-12 col-md-4 col-lg-4">
+                   <div class="form-group has-feedback">
+                    <label class="label-left" for="category">Categoría: *</label>
+                     <select class="form-control" id="category">
+                         <option id="0" value=""></option>
+                         <option id="pornstar" value="pornstar">pornstar</option>
+                         <option id="playmate" value="playmate">playmate</option>
+                         <option id="model" value="model">model</option>
+                     </select>
+                   </div>
+                </div>
+            </div>
+            
+            <!--  9 : Idioma -->
+                <div class="row form-row">
+                    <div class="col-xs-12 col-md-3 col-lg-3 form-group">
+                        <div class="form-group has-feedback" id="lang-container">
+                            <div id="pickLang">
+                                <label class="label-left" for="idioms">Elija idioma: (al menos uno)*</label>
+                                
+                            </div>
+                            <span class="glyphicon form-control-feedback"></span>
+                            <div class="form-group has-feedback">
+                                <input type="checkbox" name="idioma" value="es" id="es" class="chkbx"> Español<br>
+                                <input type="checkbox" name="idioma" value="pt" id="pt" class="chkbx"> Portugués<br>
+                                <input type="checkbox" name="idioma" value="en" id="en" class="chkbx"> Inglés<br>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            
+            <!-- LANGUAGE modules -->
+            
+            <div class="row form-row hid" id="Module_es">
+                <div class="col-xs-12 col-md-12 col-lg-12 form-group">
+                    <h2>Español</h2>
+                                              
+                       <div class="col-xs-12 col-md-12 col-lg-12 form-group inlang">
+                           <div class="form-group has-feedback">
+                            <div class="helpright"><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="La descripción para los thumbnails mostrará los primeros 50 caracteres. Al ingresar en la chica se verá completa."></span></div>
+                            <label class="label-left" for="short_desc_spa">Descripción corta: *</label>
+                           <textarea class="form-control" name="short_desc_es" id="short_desc_es"></textarea>
+                           </div>
+                       </div>
+                       
+                       <div class="col-xs-12 col-md-12 col-lg-12 form-group inlang">
+                           <div class="form-group has-feedback">
+                            <label class="label-left" for="nacionalidad_es">Nacionalidad:</label>
+                            <input type="text" class="form-control" name="nacionalidad_es" id="nacionalidad_es">
+                           </div>
+                       </div>
+                        
+                </div>
+            </div>
+            
+            <div class="row form-row hid" id="Module_pt">
+                <div class="col-xs-12 col-md-12 col-lg-12 form-group">
+                    <h2>Portugués</h2>
+                                              
+                       <div class="col-xs-12 col-md-12 col-lg-12 form-group inlang">
+                           <div class="form-group has-feedback">
+                            <div class="helpright"><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="La descripción para los thumbnails mostrará los primeros 50 caracteres. Al ingresar en la chica se verá completa."></span></div>
+                            <label class="label-left" for="short_desc_pt">Descripción corta: *</label>
+                           <textarea class="form-control" name="short_desc_pt" id="short_desc_pt"></textarea>
+                           </div>
+                       </div>
+                       
+                       <div class="col-xs-12 col-md-12 col-lg-12 form-group inlang">
+                           <div class="form-group has-feedback">
+                            <label class="label-left" for="nacionalidad_pt">Nacionalidad:</label>
+                            <input type="text" class="form-control" name="nacionalidad_pt" id="nacionalidad_pt">
+                           </div>
+                       </div>
+                </div>
+            </div>
+            
+            <div class="row form-row hid" id="Module_en">
+                <div class="col-xs-12 col-md-12 col-lg-12 form-group">
+                    <h2>Inglés</h2>
+                                              
+                       <div class="col-xs-12 col-md-12 col-lg-12 form-group inlang">
+                           <div class="form-group has-feedback">
+                            <div class="helpright"><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="La descripción para los thumbnails mostrará los primeros 50 caracteres. Al ingresar en la chica se verá completa."></span></div>
+                            <label class="label-left" for="short_desc_en">Descripción corta: *</label>
+                           <textarea class="form-control" name="short_desc_en" id="short_desc_en"></textarea>
+                           </div>
+                       </div>
+                       
+                       <div class="col-xs-12 col-md-12 col-lg-12 form-group inlang">
+                           <div class="form-group has-feedback">
+                            <label class="label-left" for="nacionalidad_en">Nacionalidad:</label>
+                            <input type="text" class="form-control" name="nacionalidad_en" id="nacionalidad_en">
+                           </div>
+                       </div>
+                </div>
+            </div>
+            
+            <!-- Last Row : Buttons -->
+            <div class="row form-row">
+               <div class="col-xs-4 col-md-4 col-lg-4">
+                </div>
+                <div class="col-xs-4 col-md-4 col-lg-4">      
+                    <button class="btn btn-primary btn-block form-control" type="submit" id="sendBut">Grabar Chica</button>
+                </div>
+                <div class="col-xs-4 col-md-4 col-lg-4">
+                </div>
+            </div>
+            </form>
+        
+        </div>
  
         
         <!-- CONTENT END -->
