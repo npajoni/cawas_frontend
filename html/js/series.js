@@ -27,26 +27,7 @@ $( document ).ready(function() {
     $("#serie-edit").select2({placeholder: "Despliega la lista"});
     var $myVerifSelect = $("#canalSelect").select2();
     
-    // activar timepicker
-    $("#runtime").durationPicker({
-      /*hours: {
-        label: "h",
-        min: 0,
-        max: 24
-      },*/
-      minutes: {
-        label: ":",
-        min: 0,
-        max: 120
-      },
-      seconds: {
-        label: "",
-        min: 0,
-        max: 59
-      },
-      classname: 'form-control',
-      responsive: true
-    });
+    
     
     // simular exit con el botón de salir
     $("#getOut").click(function(){
