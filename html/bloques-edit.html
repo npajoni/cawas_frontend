@@ -145,89 +145,37 @@
         <div class="container">  
                
               <div class="row">
-                       <!-- left col -->
-                       <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big">
-                           <div class="col-xs-12 col-md-12 col-lg-12 ">
-                               <h1>AGREGAR bloque</h1>
-                           </div>
-                           <div class="col-xs-12 col-md-4 col-lg-4 btnOnly">       
-                                <button class="btn btn-primary btn-block form-control" type="button" id="ADBtn">Nuevo bloque</button>
-                           </div>
-                      </div>
-                        
                        
-                      <!-- right col -->
-                      <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big">
-                           <div class="alignRIGHT-lg">
-                                <h1>EDITAR bloque</h1>
-                                <div>
-                                    <h3>Selecciona un bloque de la lista para editarlo</h3>
-                                </div>
-                            </div>
-                            <div>
-                            
-                                   <!-- ------------------Reemplazar por listado de bloques ----------------- -->
-                                      
-                                    <select id="bloque-select" class="form-control" size="6">
-                                        <option value="122209">Negras</option>
-                                        <option value="122211">Lesbianas calientes</option>
-                                        <option value="122212">Lesbianas templadas</option>
-                                        <option value="122213">Especial día del niño</option>
-                                        <option value="122214">Negros intimidantes</option>
-                                        <option value="122215">Perras en ojotas</option>
-                                        <option value="122216">Gordas valijas</option>
-                                    </select>
-                                    
-                                  <!-- ---------------------- Fin de  listado de bloques ------------------- -->
-                            </div>
-                            
-                            <div>
-                               <form method="get" action="bloques-edit.html" name="bloque-pickerForm" id="bloque-pickerForm" class="content-picker movieChoose">
-                                   
-                                   <div class="col-xs-12 col-md-8 col-lg-8">       
-                                       <input type="text" class="form-control" name="selectedName" id="bloqueNAME" value="">
-                                       <input type="hidden" class="form-control" name="selectedID" id="bloqueID" value="">
-
-                                   </div>
-                                   <div class="col-xs-12 col-md-4 col-lg-4">       
-                                       <button class="btn btn-primary btn-block form-control" type="button" id="IDBtn">Editar</button>
-                                   </div>
-                                   
-                                </form>
-                            </div>
-                       </div>
-                                        
-              </div>
-              
-        </div>
-        
-         <!-- hidden form -->
-        <div class="container" id="hidden1">
-        
-             <div class="row">
                        <!-- left col -->
                        <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big">
                            <div class="col-xs-12 col-md-12 col-lg-12">
-                            <h1>Nuevo Bloque</h1>
+                            <h1>Editar bloque</h1>
                            </div>
                            <div class="col-xs-4 col-md-3 col-lg-3">
                                 <button class="btn btn-primary btn-block form-control" type="button" id="CancelBtn">Cancelar</button>
                            </div>
                        </div> 
                                                                
+                       
               </div>
+              
+        </div>
+        
+         <!-- hidden form -->
+        <div class="container">
+        
+             
               
             <!-- First Row : Title -->
             <div class="row form-row">
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="form-group">
-                        <label for="orginalTitle" id="idTit">NUEVO ID : </label>
+                        <label for="orginalTitle" id="idTit">ID : </label>
                         <!-- pegar  acá -->
                         <span class="idLegend">
                            
                            
-                           <!-- pegar  acá el ID nuevo -->
-                           2121222
+                           <!-- se pega acá el ID del bloque con el valor de la variable enviada con GET-->
                            
                             
                         </span>
@@ -431,7 +379,7 @@
         </footer>
         
     <!-- Javascript -->
-    <script src="js/bloques.js"></script>
+    <script src="js/bloques-edit.js"></script>
     
     </body>
 </html>
