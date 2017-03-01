@@ -1,3 +1,123 @@
+// La anteúltima línea es la que invoca a la función para llenar el formulario.
+// la variable debajo de este texto (requestedData) es el JSON que sirve de datapool.
+// Los datos se envían por POST a movies.html... chequear eso!!!!
+
+var requestedData={"Category":
+	{
+		"category_id":"C00039",
+		"original_name":"nombre de la Categoria 22",
+		"orden":2,
+		"Categorymetadatas":[
+							{"Categorymetadata":{
+											"language": "es",
+											"name": "descripcion 1 español"
+											}
+							}
+						]
+	}
+}
+
+   
+
+
+
+// helper para populateForm(), dependiendo del tipo de tag, llena un valor en un input, un string, select o agrega texto.
+    function insertIt(id,valueSent,method){
+        switch(method){
+                case "html":
+                    $(id).html(valueSent);
+                break;
+                case "val":
+                    $(id).val(valueSent);
+                break;
+                case "append":
+                    $(id).append(valueSent);
+                break;
+                case "select":
+                    //id='"'+id+' option[value='+valueSent+']"';
+                    //console.log("id"+id);
+                    //$(id).attr('selected','selected');
+                    $(id).val(valueSent).change();
+                break;
+                default:
+                break;
+        }
+        
+    }
+
+    function insertIdiomas(cant){
+        var checkIdvar;
+        for(i=0; i<cant; i++){
+            var lang=requestedData.Category.Categorymetadatas[i].Categorymetadata.language;
+                
+            $("#"+lang).prop('checked', true);
+            $("#"+lang).change();
+            $("#Module_"+lang).show();
+            $("#nombre_"+lang).val(requestedData.Category.Categorymetadatas[i].Categorymetadata.name);
+           
+            //langQ++
+            /*$("#date_"+lang).val(makeToday());*/
+        }
+        
+        
+    }
+
+    function searchList(theList,val){
+        //console.log("estoy buscando esto:"+val+" en:"+theList);
+        var theAnswer;
+        $(theList).find('li').each(function(){
+         //console.log("ahora estoy en:"+$(this).val()+" y busco:"+val)  
+            if($(this).val()==val){
+                theAnswer=$(this).html();
+                console.log("and the winner is:"+theAnswer);
+                $(this).remove();//quita de la lista original el valor que viene el JSON
+            }
+        });
+        return(theAnswer);
+    }
+
+    function makelist(iddrop,idpick,valuesOf,theObject){
+        
+        var myArrayOfValues = valuesOf;
+        var ArrLngth = myArrayOfValues.length;        
+        var htmlContent = "";
+        for(i=0; i<ArrLngth; i++){
+            if(theObject==".girl_id"){
+             var theRealValue = myArrayOfValues[i].girl_id;
+            }
+            if(theObject==".category_id"){
+             var theRealValue = myArrayOfValues[i].category_id;
+            }
+            console.log("theRealValue"+theRealValue);
+            var listVal = searchList(idpick,theRealValue);
+            console.log("listVal after function is"+listVal);
+            htmlContent+= "<li value='"+theRealValue+"'>"+listVal+"</li>"
+        }
+        $(iddrop).html(htmlContent);
+    }
+
+ 
+    
+    // rellena el formulario con los datos recogidos en la variable requestedData
+    function populateForm(){
+        
+        var qIdiomas = requestedData.Category.Categorymetadatas.length;
+        
+        //id
+        insertIt("#idTit", requestedData.Category.asset_id, "append");
+        //name
+        insertIt("#orginalName", requestedData.Category.original_name, "val");
+        //orden
+        insertIt("#order", requestedData.Category.orden, "val");
+                        
+        //idiomas
+        insertIdiomas(qIdiomas)
+        //console.log("qIdiomas:"+qIdiomas);
+        
+    }
+
+
+
 $( document ).ready(function() {
     
     console.log( "ready!" );
@@ -15,91 +135,52 @@ $( document ).ready(function() {
     var clickedName; // recoge el valor del Nombre seleccionado en la lista de chcas;
     
     // activar los selects con filtro
-    $("#bloque-select").select2({placeholder: "Despliega la lista"});
+    $("#categoria-select").select2({placeholder: "Despliega la lista"});
     
     // simular exit con el botón de salir
     $("#getOut").click(function(){
            window.location.href = "index.html?logstatus=OFF";
     })
     
-    // Toma el ID de la chica seleccionada en la lista
-    $( "#bloque-select" ).change(function() {
-        
-        $( "#bloque-select option:selected" ).each(function() {
-          clickedName= $(this).html();
-          clickedVal= $(this).val();
-            if(clickedVal!="")
-            {
-                console.log( "clickedID="+clickedVal ); // debug
-                $( "#bloqueID" ).val(clickedVal);// Agrega el ID en el hidden field
-                $( "#bloqueNAME" ).val(clickedName);// Agrega el nombre en el campo visible
-                  
-            }
-        });
-        
-    });
+    
     
     // interacción del usuario al hacer click en el botón debajo de la lista de selección
     $( "#IDBtn" ).click(function(){ 
-        $( "#bloque-pickerForm" ).submit();// Envía el formulario con el id del bloque
+        $( "#categoria-pickerForm" ).submit();// Envía el formulario con el id de la chica
     })
     
-    // interacción del usuario al hacer click en el botón de agregar chicas
-    $( "#ADBtn" ).click(function(){ 
-         $( "#hidden1" ).show();
-    })  
+    
     
     // interacción del usuario al hacer click en el botón cancelar
     $( "#CancelBtn" ).click(function(){ 
-         $( "#hidden1" ).hide();
+         window.location.href = "categorias.html";
     }) 
     
-    // drag and drop controles para las listas
-    var adjustment;
-
-    $("ul.assetPick").sortable({
-      group: 'assetPick',
-      pullPlaceholder: false,
-      // animation on drop
-      onDrop: function  ($item, container, _super) {
-        var $clonedItem = $('<li/>').css({height: 0});
-        $item.before($clonedItem);
-        $clonedItem.animate({'height': $item.height()});
-
-        $item.animate($clonedItem.position(), function  () {
-          $clonedItem.detach();
-          _super($item, container);
-        });
-      },
-
-      // set $item relative to cursor position
-      onDragStart: function ($item, container, _super) {
-        var offset = $item.offset(),
-            pointer = container.rootGroup.pointer;
-
-        adjustment = {
-          left: pointer.left - offset.left,
-          top: pointer.top - offset.top
-        };
-
-        _super($item, container);
-      },
-      onDrag: function ($item, position) {
-        $item.css({
-          left: position.left - adjustment.left,
-          top: position.top - adjustment.top
-        });
-      }
-    });
     
-    /*---- DATE PICKER ----*/
-    $('#date_blq').dcalendarpicker({
-     // default: mm/dd/yyyy
-
-      format: 'dd-mm-yyyy'
-
+    
+    
+   
+    // checkbox idiomas detecta lo que se chequea y muestra el módulo de idioma
+    $("input[type=checkbox]").on('change', function () {
+        var self = $(this);
+        var showDiv = "#Module_"+self.attr("id");
+        if (self.is(":checked")) {
+            console.log("checkbox  id =" + self.attr("id") + "is checked ");
+            $(showDiv).show('slow');
+            langQ++;
+            langDesc.push(self.attr("id"));
+            
+        } else {
+            console.log("Id = " + self.attr("id") + "is Unchecked ");
+            $(showDiv).hide('fast');
+            langQ--;
+            langDesc.pop();
+        }
+        console.log("idiomas tildados:"+langQ+", y son:"+langDesc);// cantidad de idiomas
+        if(checkedOnce>0){
+            checkAll();
+        }
     });
-
     
     
     /* triggers for checkALL function */
@@ -122,11 +203,8 @@ $( document ).ready(function() {
         checkVal = 0;
         var asset_Id = $('#newID').val();
         var original_name = $('#orginalName').val();
-        var idioma_selected = $('#idiomaSelect').val();
-        var canal_selected = $('#canalSelect').val();
-        var publish_date = $('#date_blq').val().trim();
-        var device_selected = $('#deviceSelect').val();
-        var asset_selected = [];
+        var orden = $('#order').val().trim();
+       
         
         
         // chequea original Name
@@ -139,63 +217,24 @@ $( document ).ready(function() {
         }
         
         
-        
-        // chequea idioma
-        if (idioma_selected =="0" || idioma_selected ==""){
-            errorMe("#idiomaSelect");
-            checkVal++;
-        }else{
-            okMe("#idiomaSelect");
-            idioma_selected=$('#idiomaSelect').val();
-        }
-        
-        
-        // chequea canal
-        if (canal_selected =="0" || canal_selected ==""){
-            errorMe("#canalSelect");
-            checkVal++;
-        }else{
-            okMe("#canalSelect");
-            canal_selected=$('#canalSelect').val();
-        }
-        
-        // chequea publish_date
-        if(publish_date=="" || publish_date==" ")
+        // chequea orden
+        if(orden=="" || orden==" ")
         {
-            errorMe("#date_blq");
+            errorMe("#order");
             checkVal++;
         }else{
-            okMe("#date_blq");
+            okMe("#order");
         }
         
-        // chequea dispositivo
-        if (device_selected =="0" || device_selected ==""){
-            errorMe("#deviceSelect");
+                
+        // chequeo de idiomas (tit_; desc_; date_)
+        if(langQ==0){
+            errorMe("#pickLang");
             checkVal++;
         }else{
-            okMe("#deviceSelect");
-            device_selected=$('#deviceSelect').val();
+            okMe("#pickLang");
+            checkLangs(langDesc);
         }
-        
-         // chequea assets
-        if ( $('#assetDrop li').length < 1 )
-        {
-            errorMe("#assetDrop");
-            checkVal++;
-        }else{
-            okMe("#assetDrop");
-            asset_selected = [];
-            $('#assetDrop li').each(function(){
-               asset_selected.push($(this).val());
-            })
-            //console.log("asset_selected:"+asset_selected)
-        }
-        
-        
-        
-        
-        
-        
                 
         /* -----------  Sending Routine -----------*/
         
@@ -271,38 +310,29 @@ $( document ).ready(function() {
                 var lngth = arr.length;
                 for(i=0; i<lngth; i++){
                     var lang=arr[i];
-                    /* check nacionalidad */
-                    var titCont = $("#nacionalidad_"+lang).val();
+                    /* check nombre */
+                    var titCont = $("#nombre_"+lang).val();
                     if(titCont==""){
-                        errorMe("#nacionalidad_"+lang);
+                        errorMe("#nombre_"+lang);
                         checkVal++;
                     }else{
-                        okMe("#nacionalidad_"+lang);
+                        okMe("#nombre_"+lang);
                     }
-                    /* check desc */
-                    var descCont = $("#short_desc_"+lang).val().trim();
-                    if(descCont.length < 1){
-                        errorMe("#short_desc_"+lang);
-                        checkVal++;
-                    }else{
-                        okMe("#short_desc_"+lang);
-                    }
+                    
                     
                 }
             }
         
-            function addAssetMetadata(arr){
+            function addCatMetadata(arr){
                 var lngth = arr.length;
                 var myLangs = "";
                 
                 for(i=0; i<lngth; i++){
                     var lang=arr[i];
-                    var assetID = $("#asset_id_").val().trim()
-                    var short = $("#short_desc_"+lang).val().trim();
-                    myLangs += '{"Girlmetadata":';
+                    var nombre = $("#nombre_"+lang).val().trim()
+                    myLangs += '{"Categorymetadata":';
                     myLangs += '{"language": "'+lang+'",';
-                    myLangs += '"description": "'+short+'",';
-                    myLangs += '"nationality":"'+nacion+'"';
+                    myLangs += '"name": "'+nombre+'"';
                     myLangs += '}}';
                     if(i<lngth-1){
                         myLangs += ',';
@@ -316,22 +346,19 @@ $( document ).ready(function() {
                 if(checkVal==0){
                     
                     var myJSON = '';
-                    myJSON+='{"Block":{';
-                    myJSON+='"block_id":"'+asset_Id+'",';
-                    myJSON+='"name":"'+original_name+'",';
-                    myJSON+='"language":"'+idioma_selected+'",';
-                    myJSON+='"channel_id":'+canal_selected+',';
-                    myJSON+='"publish_date":"'+publish_date+'",';
-                    myJSON+='"target_device_id":"'+device_selected+'",';
-                    myJSON+='"assets": [';
-                    myJSON+= explodeArray(asset_selected, "asset_id");
+                    myJSON+='{"Category":{';
+                    myJSON+='"category_id":"'+asset_Id+'",';
+                    myJSON+='"original_name":"'+original_name+'",';
+                    myJSON+='"orden":'+orden+',';
+                    myJSON+='"Categorymetadatas": [';
+                    myJSON+= addCatMetadata(langDesc);
                     myJSON+=']}}';
                     console.log(myJSON);
                     $("#varsToJSON").val(myJSON);
-                    $("#assetForm").submit();
+                    $("#categoriaForm").submit();
                   }  
             }
         
     }
-    
+    populateForm();
 });

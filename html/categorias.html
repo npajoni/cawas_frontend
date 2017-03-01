@@ -85,10 +85,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Chica grabada exitosamente</h4>
+        <h4 class="modal-title" id="myModalLabel">Categoría grabada exitosamente</h4>
       </div>
       <div class="modal-body">
-        Todos los datos han sido grabados. Puede continuar con la carga de otras chicas. 
+        Todos los datos han sido grabados. Puede continuar con la carga de otras categorías. 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
@@ -148,10 +148,10 @@
                        <!-- left col -->
                        <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big">
                            <div class="col-xs-12 col-md-12 col-lg-12 ">
-                               <h1>AGREGAR chica</h1>
+                               <h1>AGREGAR categoría</h1>
                            </div>
                            <div class="col-xs-12 col-md-4 col-lg-4 btnOnly">       
-                                <button class="btn btn-primary btn-block form-control" type="button" id="ADBtn">Nueva chica</button>
+                                <button class="btn btn-primary btn-block form-control" type="button" id="ADBtn">Nueva categoría</button>
                            </div>
                       </div>
                         
@@ -159,35 +159,35 @@
                       <!-- right col -->
                       <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big">
                            <div class="alignRIGHT-lg">
-                                <h1>EDITAR chica</h1>
+                                <h1>EDITAR categoría</h1>
                                 <div>
-                                    <h3>Selecciona una chica de la lista para editarla</h3>
+                                    <h3>Selecciona una categoría de la lista para editarla</h3>
                                 </div>
                             </div>
                             <div>
                             
-                                   <!-- ------------------Reemplazar por listado de chicas ----------------- -->
+                                   <!-- ------------------Reemplazar por listado de categorías ----------------- -->
                                       
-                                    <select id="chica-select" class="form-control" size="6">
-                                        <option value="122209">Bonnie Taylor</option>
-                                        <option value="122210">Taylor Swift</option>
-                                        <option value="122211">Saylor Moon</option>
-                                        <option value="122212">Secta Moon</option>
-                                        <option value="122213">Ronda Mon</option>
-                                        <option value="122214">Elja Mon</option>
-                                        <option value="122215">Elke Sito</option>
-                                        <option value="122216">Helga tito</option>
+                                    <select id="categoria-select" class="form-control" size="6">
+                                        <option value="122209">Negras</option>
+                                        <option value="122210">Hardcore</option>
+                                        <option value="122211">Anal</option>
+                                        <option value="122212">Fetish</option>
+                                        <option value="122213">Amateur</option>
+                                        <option value="122214">Soft Porn</option>
+                                        <option value="122215">Gay</option>
+                                        <option value="122216">Erótica</option>
                                     </select>
                                     
-                                  <!-- ---------------------- Fin de  listado de chicas ------------------- -->
+                                  <!-- ---------------------- Fin de  listado de categorías ------------------- -->
                             </div>
                             
                             <div>
-                               <form method="get" action="chicas-edit.html" name="chica-pickerForm" id="chica-pickerForm" class="content-picker movieChoose">
+                               <form method="get" action="categorias-edit.html" name="categoria-pickerForm" id="categoria-pickerForm" class="content-picker movieChoose">
                                    
                                    <div class="col-xs-12 col-md-8 col-lg-8">       
-                                       <input type="text" class="form-control" name="selectedName" id="chicaNAME" value="">
-                                       <input type="hidden" class="form-control" name="selectedID" id="chicaID" value="">
+                                       <input type="text" class="form-control" name="selectedName" id="categoriaNAME" value="">
+                                       <input type="hidden" class="form-control" name="selectedID" id="categoriaID" value="">
 
                                    </div>
                                    <div class="col-xs-12 col-md-4 col-lg-4">       
@@ -209,7 +209,7 @@
                        <!-- left col -->
                        <div class="col-xs-12 col-md-6 col-lg-6 sepTOP-big">
                            <div class="col-xs-12 col-md-12 col-lg-12">
-                            <h1>Nueva chica</h1>
+                            <h1>Nueva categoría</h1>
                            </div>
                            <div class="col-xs-4 col-md-3 col-lg-3">
                                 <button class="btn btn-primary btn-block form-control" type="button" id="CancelBtn">Cancelar</button>
@@ -237,7 +237,7 @@
                       
                       
                         <!-- pegar en "value" el ID nuevo -->
-                        <input type="hidden" name="newID" vlaue="">
+                        <input type="hidden" name="newID" vlaue="" id="newID">
                         <label class="label-left" for="orginalName">Nombre: *</label>
                         <input type="text" class="form-control" name="orginalName" id="orginalName" required autofocus><span class="glyphicon form-control-feedback"></span>
                     </div>
@@ -245,82 +245,27 @@
             </div>
             
             <!-- Form manda imagenes y vars en un JSON hecho string -->
-                <form method="post" action="" name="girl-completeForm"  class="content-picker movieChoose" id="girlForm" enctype="multipart/form-data">
+                <form method="post" action="" name="categoria-completeForm"  class="content-picker movieChoose" id="categoriaForm" enctype="multipart/form-data">
                 
-            <!-- 2 Row : Images -->
-                <div class="row form-row">
-                    <div class="col-xs-4 col-md-4 col-lg-4 form-group">
-                       <div class="form-group has-feedback imgUpload">
-                            <label class="label-left" for="ThumbHor" id="ThumbHorTit">Asociar imagen landscape: *</label>
-                            <input type="file" class="form-control" name="ThumbHor" id="ThumbHor" accept="image/*">
-                            <span class="glyphicon form-control-feedback"></span>
-                            <img id="imageH"/>
-                            
-                            
-                        </div>
-                    </div>
-                    <div class="col-xs-4 col-md-4 col-lg-4 form-group" >
-                       <div class="form-group has-feedback imgUpload">
-                            <label for="ThumbVer" id="ThumbVerTit">Asociar imagen portrait: *</label>
-                            <input type="file" class="form-control" name="ThumbVer" id="ThumbVer" accept="image/*">
-                            
-                            <span class="glyphicon form-control-feedback"></span>
-                            <img id="imageV"/>
-                        </div>
-                    </div>
-                    <div class="col-xs-4 col-md-4 col-lg-4">
-                    </div>
-                </div>
-
+            
                 <input type="hidden" name="varsToJSON" id="varsToJSON" value="">
               
                </form>
             
             
-            <!-- Row 3: Fecha Nacimiento -->
+            <!-- Row 2: Orden -->
             <div class="row form-row">
                <div class="col-xs-12 col-md-4 col-lg-4">
                    <div class="form-group has-feedback">
-                    <label class="label-left" for="birthDate">Fecha de Nacimiento: *</label>
-                     <input type="text" class="form-control" name="birthDate" id="birthDate" required autofocus placeholder="dd-mm-aaaa">
-                     <span class="glyphicon form-control-feedback"></span>
-                   </div>
-                </div>
-            </div>
-            
-            <!-- Row 4: Altura y peso -->
-            <div class="row form-row">
-               <div class="col-xs-12 col-md-4 col-lg-4">
-                   <div class="form-group has-feedback">
-                    <label class="label-left" for="height">Altura (en mts. ej:1.60): *</label>
-                     <input type="number" class="form-control" name="height" id="height" min="0" max="3" oninput="maxLengthCheck(this)" required autofocus ><span class="glyphicon form-control-feedback"></span>
+                    <label class="label-left" for="order">Órden: *</label><span class="glyphicon glyphicon-question-sign fRIGHT" data-toggle="tooltip" title="Este campo responde al órden con que las categorías aparecen listadas por default en el front end. No debe anteponerse un cero. Ej:1"></span>
+                     <input type="number" class="form-control" name="order" id="order" min="0" max="3" oninput="maxLengthCheck(this)" required autofocus ><span class="glyphicon form-control-feedback"></span>
                    </div>
                 </div>
                 
-                <div class="col-xs-12 col-md-4 col-lg-4">
-                   <div class="form-group has-feedback">
-                    <label class="label-left" for="weight">Peso (en kgs.): *</label>
-                     <input type="number" class="form-control" name="weight" id="weight" min="30" max="200" oninput="maxLengthCheck(this)" required autofocus><span class="glyphicon form-control-feedback"></span>
-                    </div>
-                </div>
+                
             </div>
            
-            <!-- Row 5: Categoría -->
-            <div class="row form-row">
-               <div class="col-xs-12 col-md-4 col-lg-4">
-                   <div class="form-group has-feedback">
-                    <label class="label-left" for="category">Categoría: *</label>
-                     <select class="form-control" id="category">
-                         <option id="0" value=""></option>
-                         <option id="pornstar" value="pornstar">pornstar</option>
-                         <option id="playmate" value="playmate">playmate</option>
-                         <option id="model" value="model">model</option>
-                     </select>
-                     <span class="glyphicon form-control-feedback"></span>
-                   </div>
-                </div>
-            </div>
-            
+                        
             <!--  9 : Idioma -->
                 <div class="row form-row">
                     <div class="col-xs-12 col-md-3 col-lg-3 form-group">
@@ -346,19 +291,11 @@
                 <div class="col-xs-12 col-md-12 col-lg-12 form-group">
                     <h2>Español</h2>
                                               
+                                              
                        <div class="col-xs-12 col-md-12 col-lg-12 form-group inlang">
                            <div class="form-group has-feedback">
-                            <div class="helpright"><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="La descripción para los thumbnails mostrará los primeros 50 caracteres. Al ingresar en la chica se verá completa."></span></div>
-                            <label class="label-left" for="short_desc_spa">Descripción corta: *</label>
-                           <textarea class="form-control" name="short_desc_es" id="short_desc_es"></textarea>
-                           <span class="glyphicon form-control-feedback"></span>
-                           </div>
-                       </div>
-                       
-                       <div class="col-xs-12 col-md-12 col-lg-12 form-group inlang">
-                           <div class="form-group has-feedback">
-                            <label class="label-left" for="nacionalidad_es">Nacionalidad:</label>
-                            <input type="text" class="form-control" name="nacionalidad_es" id="nacionalidad_es">
+                            <label class="label-left" for="nombre_es">Nombre:</label>
+                            <input type="text" class="form-control" name="nombre_es" id="nombre_es">
                             <span class="glyphicon form-control-feedback"></span>
                            </div>
                        </div>
@@ -370,19 +307,11 @@
                 <div class="col-xs-12 col-md-12 col-lg-12 form-group">
                     <h2>Portugués</h2>
                                               
+                                              
                        <div class="col-xs-12 col-md-12 col-lg-12 form-group inlang">
                            <div class="form-group has-feedback">
-                            <div class="helpright"><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="La descripción para los thumbnails mostrará los primeros 50 caracteres. Al ingresar en la chica se verá completa."></span></div>
-                            <label class="label-left" for="short_desc_pt">Descripción corta: *</label>
-                           <textarea class="form-control" name="short_desc_pt" id="short_desc_pt"></textarea>
-                           <span class="glyphicon form-control-feedback"></span>
-                           </div>
-                       </div>
-                       
-                       <div class="col-xs-12 col-md-12 col-lg-12 form-group inlang">
-                           <div class="form-group has-feedback">
-                            <label class="label-left" for="nacionalidad_pt">Nacionalidad:</label>
-                            <input type="text" class="form-control" name="nacionalidad_pt" id="nacionalidad_pt">
+                            <label class="label-left" for="nombre_pt">Nombre:</label>
+                            <input type="text" class="form-control" name="nombre_pt" id="nombre_pt">
                             <span class="glyphicon form-control-feedback"></span>
                            </div>
                        </div>
@@ -393,19 +322,11 @@
                 <div class="col-xs-12 col-md-12 col-lg-12 form-group">
                     <h2>Inglés</h2>
                                               
+                                              
                        <div class="col-xs-12 col-md-12 col-lg-12 form-group inlang">
                            <div class="form-group has-feedback">
-                            <div class="helpright"><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="La descripción para los thumbnails mostrará los primeros 50 caracteres. Al ingresar en la chica se verá completa."></span></div>
-                            <label class="label-left" for="short_desc_en">Descripción corta: *</label>
-                           <textarea class="form-control" name="short_desc_en" id="short_desc_en"></textarea>
-                           <span class="glyphicon form-control-feedback"></span>
-                           </div>
-                       </div>
-                       
-                       <div class="col-xs-12 col-md-12 col-lg-12 form-group inlang">
-                           <div class="form-group has-feedback">
-                            <label class="label-left" for="nacionalidad_en">Nacionalidad:</label>
-                            <input type="text" class="form-control" name="nacionalidad_en" id="nacionalidad_en">
+                            <label class="label-left" for="nombre_en">Nombre:</label>
+                            <input type="text" class="form-control" name="nombre_en" id="nombre_en">
                             <span class="glyphicon form-control-feedback"></span>
                            </div>
                        </div>
@@ -417,7 +338,7 @@
                <div class="col-xs-4 col-md-4 col-lg-4">
                 </div>
                 <div class="col-xs-4 col-md-4 col-lg-4">      
-                    <button class="btn btn-primary btn-block form-control" type="submit" id="sendBut">Grabar Chica</button>
+                    <button class="btn btn-primary btn-block form-control" type="submit" id="sendBut">Grabar Categoría</button>
                 </div>
                 <div class="col-xs-4 col-md-4 col-lg-4">
                 </div>
@@ -433,7 +354,7 @@
         </footer>
         
     <!-- Javascript -->
-    <script src="js/chicas.js"></script>
+    <script src="js/categorias.js"></script>
     
     </body>
 </html>

@@ -15,7 +15,7 @@ $( document ).ready(function() {
     var clickedName; // recoge el valor del Nombre seleccionado en la lista de chcas;
     
     // activar los selects con filtro
-    $("#bloque-select").select2({placeholder: "Despliega la lista"});
+    $("#categoria-select").select2({placeholder: "Despliega la lista"});
     
     // simular exit con el botón de salir
     $("#getOut").click(function(){
@@ -23,16 +23,16 @@ $( document ).ready(function() {
     })
     
     // Toma el ID de la chica seleccionada en la lista
-    $( "#bloque-select" ).change(function() {
+    $( "#categoria-select" ).change(function() {
         
-        $( "#bloque-select option:selected" ).each(function() {
+        $( "#categoria-select option:selected" ).each(function() {
           clickedName= $(this).html();
           clickedVal= $(this).val();
             if(clickedVal!="")
             {
                 console.log( "clickedID="+clickedVal ); // debug
-                $( "#bloqueID" ).val(clickedVal);// Agrega el ID en el hidden field
-                $( "#bloqueNAME" ).val(clickedName);// Agrega el nombre en el campo visible
+                $( "#categoriaID" ).val(clickedVal);// Agrega el ID en el hidden field
+                $( "#categoriaNAME" ).val(clickedName);// Agrega el nombre en el campo visible
                   
             }
         });
@@ -41,7 +41,7 @@ $( document ).ready(function() {
     
     // interacción del usuario al hacer click en el botón debajo de la lista de selección
     $( "#IDBtn" ).click(function(){ 
-        $( "#bloque-pickerForm" ).submit();// Envía el formulario con el id del bloque
+        $( "#categoria-pickerForm" ).submit();// Envía el formulario con el id de la chica
     })
     
     // interacción del usuario al hacer click en el botón de agregar chicas
@@ -54,52 +54,31 @@ $( document ).ready(function() {
          $( "#hidden1" ).hide();
     }) 
     
-    // drag and drop controles para las listas
-    var adjustment;
-
-    $("ul.assetPick").sortable({
-      group: 'assetPick',
-      pullPlaceholder: false,
-      // animation on drop
-      onDrop: function  ($item, container, _super) {
-        var $clonedItem = $('<li/>').css({height: 0});
-        $item.before($clonedItem);
-        $clonedItem.animate({'height': $item.height()});
-
-        $item.animate($clonedItem.position(), function  () {
-          $clonedItem.detach();
-          _super($item, container);
-        });
-      },
-
-      // set $item relative to cursor position
-      onDragStart: function ($item, container, _super) {
-        var offset = $item.offset(),
-            pointer = container.rootGroup.pointer;
-
-        adjustment = {
-          left: pointer.left - offset.left,
-          top: pointer.top - offset.top
-        };
-
-        _super($item, container);
-      },
-      onDrag: function ($item, position) {
-        $item.css({
-          left: position.left - adjustment.left,
-          top: position.top - adjustment.top
-        });
-      }
-    });
     
-    /*---- DATE PICKER ----*/
-    $('#date_blq').dcalendarpicker({
-     // default: mm/dd/yyyy
-
-      format: 'dd-mm-yyyy'
-
+    
+    
+   
+    // checkbox idiomas detecta lo que se chequea y muestra el módulo de idioma
+    $("input[type=checkbox]").on('change', function () {
+        var self = $(this);
+        var showDiv = "#Module_"+self.attr("id");
+        if (self.is(":checked")) {
+            console.log("checkbox  id =" + self.attr("id") + "is checked ");
+            $(showDiv).show('slow');
+            langQ++;
+            langDesc.push(self.attr("id"));
+            
+        } else {
+            console.log("Id = " + self.attr("id") + "is Unchecked ");
+            $(showDiv).hide('fast');
+            langQ--;
+            langDesc.pop();
+        }
+        console.log("idiomas tildados:"+langQ+", y son:"+langDesc);// cantidad de idiomas
+        if(checkedOnce>0){
+            checkAll();
+        }
     });
-
     
     
     /* triggers for checkALL function */
@@ -122,11 +101,8 @@ $( document ).ready(function() {
         checkVal = 0;
         var asset_Id = $('#newID').val();
         var original_name = $('#orginalName').val();
-        var idioma_selected = $('#idiomaSelect').val();
-        var canal_selected = $('#canalSelect').val();
-        var publish_date = $('#date_blq').val().trim();
-        var device_selected = $('#deviceSelect').val();
-        var asset_selected = [];
+        var orden = $('#order').val().trim();
+       
         
         
         // chequea original Name
@@ -139,63 +115,24 @@ $( document ).ready(function() {
         }
         
         
-        
-        // chequea idioma
-        if (idioma_selected =="0" || idioma_selected ==""){
-            errorMe("#idiomaSelect");
-            checkVal++;
-        }else{
-            okMe("#idiomaSelect");
-            idioma_selected=$('#idiomaSelect').val();
-        }
-        
-        
-        // chequea canal
-        if (canal_selected =="0" || canal_selected ==""){
-            errorMe("#canalSelect");
-            checkVal++;
-        }else{
-            okMe("#canalSelect");
-            canal_selected=$('#canalSelect').val();
-        }
-        
-        // chequea publish_date
-        if(publish_date=="" || publish_date==" ")
+        // chequea orden
+        if(orden=="" || orden==" ")
         {
-            errorMe("#date_blq");
+            errorMe("#order");
             checkVal++;
         }else{
-            okMe("#date_blq");
+            okMe("#order");
         }
         
-        // chequea dispositivo
-        if (device_selected =="0" || device_selected ==""){
-            errorMe("#deviceSelect");
+                
+        // chequeo de idiomas (tit_; desc_; date_)
+        if(langQ==0){
+            errorMe("#pickLang");
             checkVal++;
         }else{
-            okMe("#deviceSelect");
-            device_selected=$('#deviceSelect').val();
+            okMe("#pickLang");
+            checkLangs(langDesc);
         }
-        
-         // chequea assets
-        if ( $('#assetDrop li').length < 1 )
-        {
-            errorMe("#assetDrop");
-            checkVal++;
-        }else{
-            okMe("#assetDrop");
-            asset_selected = [];
-            $('#assetDrop li').each(function(){
-               asset_selected.push($(this).val());
-            })
-            //console.log("asset_selected:"+asset_selected)
-        }
-        
-        
-        
-        
-        
-        
                 
         /* -----------  Sending Routine -----------*/
         
@@ -271,38 +208,29 @@ $( document ).ready(function() {
                 var lngth = arr.length;
                 for(i=0; i<lngth; i++){
                     var lang=arr[i];
-                    /* check nacionalidad */
-                    var titCont = $("#nacionalidad_"+lang).val();
+                    /* check nombre */
+                    var titCont = $("#nombre_"+lang).val();
                     if(titCont==""){
-                        errorMe("#nacionalidad_"+lang);
+                        errorMe("#nombre_"+lang);
                         checkVal++;
                     }else{
-                        okMe("#nacionalidad_"+lang);
+                        okMe("#nombre_"+lang);
                     }
-                    /* check desc */
-                    var descCont = $("#short_desc_"+lang).val().trim();
-                    if(descCont.length < 1){
-                        errorMe("#short_desc_"+lang);
-                        checkVal++;
-                    }else{
-                        okMe("#short_desc_"+lang);
-                    }
+                    
                     
                 }
             }
         
-            function addAssetMetadata(arr){
+            function addCatMetadata(arr){
                 var lngth = arr.length;
                 var myLangs = "";
                 
                 for(i=0; i<lngth; i++){
                     var lang=arr[i];
-                    var assetID = $("#asset_id_").val().trim()
-                    var short = $("#short_desc_"+lang).val().trim();
-                    myLangs += '{"Girlmetadata":';
+                    var nombre = $("#nombre_"+lang).val().trim()
+                    myLangs += '{"Categorymetadata":';
                     myLangs += '{"language": "'+lang+'",';
-                    myLangs += '"description": "'+short+'",';
-                    myLangs += '"nationality":"'+nacion+'"';
+                    myLangs += '"name": "'+nombre+'"';
                     myLangs += '}}';
                     if(i<lngth-1){
                         myLangs += ',';
@@ -316,19 +244,16 @@ $( document ).ready(function() {
                 if(checkVal==0){
                     
                     var myJSON = '';
-                    myJSON+='{"Block":{';
-                    myJSON+='"block_id":"'+asset_Id+'",';
-                    myJSON+='"name":"'+original_name+'",';
-                    myJSON+='"language":"'+idioma_selected+'",';
-                    myJSON+='"channel_id":'+canal_selected+',';
-                    myJSON+='"publish_date":"'+publish_date+'",';
-                    myJSON+='"target_device_id":"'+device_selected+'",';
-                    myJSON+='"assets": [';
-                    myJSON+= explodeArray(asset_selected, "asset_id");
+                    myJSON+='{"Category":{';
+                    myJSON+='"category_id":"'+asset_Id+'",';
+                    myJSON+='"original_name":"'+original_name+'",';
+                    myJSON+='"orden":'+orden+',';
+                    myJSON+='"Categorymetadatas": [';
+                    myJSON+= addCatMetadata(langDesc);
                     myJSON+=']}}';
                     console.log(myJSON);
                     $("#varsToJSON").val(myJSON);
-                    $("#assetForm").submit();
+                    $("#categoriaForm").submit();
                   }  
             }
         
