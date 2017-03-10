@@ -1,155 +1,3 @@
-// La anteúltima línea es la que invoca a la función para llenar el formulario.
-// la variable debajo de este texto (requestedData) es el JSON que sirve de datapool.
-// Los datos al finalizar la edición se envían por POST a si mismo... chequear eso!!!!
-
-var requestedData={"Serie":
-                {
-                    "asset_id":"12312311",
-                    "original_title":"Titulo de la serie 1",
-                    "channel_id":"1",
-                    "year":2016,
-                    "cast":"actor1, actor2",
-                    "directors":"director 1, director 2",
-                    "girls": [{"girl_id":"210002122"},{"girl_id":"210002127"}],
-                    "categories": [{"category_id":"210002127"},{"category_id":"210002128"}],
-                    "Seriemetadatas":[
-                                        {"Seriemetadata":{
-                                                        "language": "pt",
-                                                        "title": "descripcion 1 portugues",
-                                                        "summary_short": "summary_short 1 portugues",
-                                                        "summary_long": "summary_long 1 portugues"
-                                                        }
-                                        }, 
-                                        {"Seriemetadata":{
-                                                        "language": "es",
-                                                        "title": "descripcion 2 español",
-                                                        "summary_short": "summary_short 2 español",
-                                                        "summary_long": "summary_long 2 español"
-                                                        }
-                                        } 
-                                    ]
-                }
-            }
-
-// helper para populateForm(), dependiendo del tipo de tag, llena un valor en un input, un string, select o agrega texto.
-    function insertIt(id,valueSent,method){
-        switch(method){
-                case "html":
-                    $(id).html(valueSent);
-                break;
-                case "val":
-                    $(id).val(valueSent);
-                break;
-                case "append":
-                    $(id).append(valueSent);
-                break;
-                case "select":
-                    //id='"'+id+' option[value='+valueSent+']"';
-                    //console.log("id"+id);
-                    //$(id).attr('selected','selected');
-                    $(id).val(valueSent).change();
-                break;
-                default:
-                break;
-        }
-        
-    }
-
-    function insertIdiomas(cant){
-        var checkIdvar;
-        for(i=0; i<cant; i++){
-            var lang=requestedData.Serie.Seriemetadatas[i].Seriemetadata.language;
-            $("#"+lang).prop('checked', true);
-            $("#"+lang).change();
-            $("#Module_"+lang).show();
-            $("#tit_"+lang).val(requestedData.Serie.Seriemetadatas[i].Seriemetadata.title);
-            $("#short_desc_"+lang).val(requestedData.Serie.Seriemetadatas[i].Seriemetadata.summary_long);
-            
-        }
-        
-        
-    }
-
-    function searchList(theList,val){
-        console.log("estoy buscando esto:"+val+" en:"+theList);
-        var theAnswer;
-        $(theList).find('li').each(function(){
-         //console.log("ahora estoy en:"+$(this).val()+" y busco:"+val)  
-            if($(this).val()==val){
-                theAnswer=$(this).html();
-                console.log("and the winner is:"+theAnswer);
-                $(this).remove();//quita de la lista original el valor que viene el JSON
-            }
-        });
-        return(theAnswer);
-    }
-
-    function makelist(iddrop,idpick,valuesOf,theObject){
-        
-        var myArrayOfValues = valuesOf;
-        var ArrLngth = myArrayOfValues.length;        
-        var htmlContent = "";
-        for(i=0; i<ArrLngth; i++){
-            if(theObject==".girl_id"){
-             var theRealValue = myArrayOfValues[i].girl_id;
-            }
-            if(theObject==".category_id"){
-             var theRealValue = myArrayOfValues[i].category_id;
-            }
-            console.log("theRealValue"+theRealValue);
-            var listVal = searchList(idpick,theRealValue);
-            console.log("listVal after function is"+listVal);
-            htmlContent+= "<li value='"+theRealValue+"'>"+listVal+"</li>"
-        }
-        $(iddrop).html(htmlContent);
-    }
-
-    function makeToday(){
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
-
-        var yyyy = today.getFullYear();
-        if(dd<10){
-            dd='0'+dd;
-        } 
-        if(mm<10){
-            mm='0'+mm;
-        } 
-        var today = dd+'/'+mm+'/'+yyyy;
-        return(today);
-    }
-    
-    // rellena el formulario con los datos recogidos en la variable requestedData
-    function populateForm(){
-        
-        var qIdiomas = requestedData.Serie.Seriemetadatas.length;
-        
-        //id
-        insertIt("#idTit", requestedData.Serie.asset_id, "append");
-        //title
-        insertIt("#orginalTitle", requestedData.Serie.original_title, "val");
-        //girls
-        makelist("#pornstarDrop","#pornstarPick",requestedData.Serie.girls,".girl_id");
-        //género
-        makelist("#generoDrop","#generoPick",requestedData.Serie.categories,".category_id");
-        //canales
-        insertIt("#canalSelect", requestedData.Serie.channel_id, "select");
-              
-        //año de estreno
-        insertIt("#releaseYear", requestedData.Serie.year, "val");
-        //Director
-        insertIt("#director", requestedData.Serie.directors, "val");
-        //Elenco
-        insertIt("#elenco", requestedData.Serie.cast, "val");
-        
-        //idiomas
-        insertIdiomas(qIdiomas)
-        //console.log("qIdiomas:"+qIdiomas);
-        
-    }
-
-
 $( document ).ready(function() {
     
     console.log( "ready!" );
@@ -177,6 +25,7 @@ $( document ).ready(function() {
     // activar los selects con filtro
     
     $("#serie-edit").select2({placeholder: "Despliega la lista"});
+    var $mySerieSelect = $("#serie-id").select2();
     var $myVerifSelect = $("#canalSelect").select2();
     
     
@@ -186,7 +35,26 @@ $( document ).ready(function() {
            window.location.href = "index.html?logstatus=OFF";
     })
     
-    
+    // activar timepicker
+    $("#runtime").durationPicker({
+      /*hours: {
+        label: "h",
+        min: 0,
+        max: 24
+      },*/
+      minutes: {
+        label: ":",
+        min: 0,
+        max: 120
+      },
+      seconds: {
+        label: "",
+        min: 0,
+        max: 59
+      },
+      classname: 'form-control',
+      responsive: true
+    });
     
         
     // Toma el nombre de la movie seleccionada en la lista
@@ -206,7 +74,7 @@ $( document ).ready(function() {
     
     // simular exit con el botón de salir
     $("#EDBtn").click(function(){
-           window.location.href = "series-edit.html?ID="+clickedTextID;
+           window.location.href = "capitulos-edit.html?ID="+clickedTextID;
     })
     
     // interacción del usuario al hacer click en el botón debajo de la lista de selección
@@ -214,11 +82,6 @@ $( document ).ready(function() {
         $( "#idTit" ).html("AGREGANDO ID: "+clickedVal);// Agrega el ID en el título
         $( "#hidden1" ).show();
     })
-    
-    // interacción del usuario al hacer click en el botón cancelar
-    $( "#CancelBtn" ).click(function(){ 
-         window.location.href = "series.html";
-    }) 
     
     //preview de imagenes cargadas por el front end
     
@@ -393,11 +256,15 @@ $( document ).ready(function() {
         checkVal = 0;
         var asset_Id = $('#movieID').val();
         var original_Title = $('#orginalTitle').val();
-        var canal_selected = $('#canalSelect option:selected');
+        var serie_selected; 
+        var chapter_selected = $('#chapter').val();
+        var season_selected = $('#season').val();
+        var canal_selected; $('#canalSelect option:selected');
         var pornstars_selected = [];
         var categories_selected = [];
         var director_selected = $('#director').val();
         var elenco_selected = $('#elenco').val();
+        var display_runtime = $('#runtime').val();
         var year_selected = $('#releaseYear').val();
         
         // chequea original Title
@@ -408,6 +275,57 @@ $( document ).ready(function() {
         }else{
             okMe("#orginalTitle");
         }
+        
+        // chequea serie
+        console.log("#serie-id:"+$('#serie-id').val());
+        if ( $('#serie-id').val()=="0" || $('#serie-id').val()==0)
+        {
+            errorMe("#serie-id");
+            //$(".select2-selection--single").css("border","1px #a94442 solid");
+            checkVal++;
+        }else{
+            
+           
+            okMe("#serie-id");
+            
+            //$(".select2-selection--single").css("border","1px #3c763d solid");
+            serie_selected=$('#serie-id').val();
+        }
+        
+        //chequea número capíitulo
+        if(chapter_selected=="" || chapter_selected==" ")
+        {
+            errorMe("#chapter");
+            checkVal++;
+        }else{
+            okMe("#chapter");
+        }
+        
+        //chequea temporada
+        if(season_selected=="" || season_selected==" ")
+        {
+            errorMe("#season");
+            checkVal++;
+        }else{
+            okMe("#season");
+        }
+        
+         // chequea display runtime
+        if(display_runtime=="" || display_runtime=="0:,0")
+        {
+            errorMe("#runtime");
+            $(".durationpicker-container").css("border","1px #a94442 solid");
+            checkVal++;
+        }else{
+            console.log("display:runtime"+display_runtime);
+            $(".durationpicker-container").css("border","1px #3c763d solid");
+            var myStrRuntime = display_runtime;
+            var myDirtyRuntime = myStrRuntime.split(",");
+            display_runtimeJSON=myDirtyRuntime[0]+myDirtyRuntime[1];
+            okMe("#runtime");
+        }
+        
+        
         // chequea thumbnail horizaontal
         if(!$('#ThumbHor').val()){
             errorMe("#ThumbHor");
@@ -457,11 +375,11 @@ $( document ).ready(function() {
         if ( $('#canalSelect').val()=="0" || $('#canalSelect').val()==0)
         {
             errorMe("#canalSelect");
-            $(".select2-selection--single").css("border","1px #a94442 solid");
+            //$(".select2-selection--single").css("border","1px #a94442 solid");
             checkVal++;
         }else{
             okMe("#canalSelect");
-             $(".select2-selection--single").css("border","1px #3c763d solid");
+             //$(".select2-selection--single").css("border","1px #3c763d solid");
             canal_selected=$('#canalSelect').val();
         }
         
@@ -494,14 +412,7 @@ $( document ).ready(function() {
             okMe("#elenco");
         }
         
-        // chequeo de idiomas (tit_; desc_; date_)
-        if(langQ==0){
-            errorMe("#pickLang");
-            checkVal++;
-        }else{
-            okMe("#pickLang");
-            checkLangs(langDesc);
-        }
+        
                 
         /* -----------  Sending Routine -----------*/
         
@@ -539,15 +450,35 @@ $( document ).ready(function() {
                 }
                 $(theField).parent().addClass('has-error');
                 $(theField).next(".glyphicon").addClass('glyphicon-remove');
+                
+                if(theField=="#serie-id"){
+                    
+                    $('#SeriePick').find('span.select2-selection--single').removeClass("has-successSelect2");
+                    $('#SeriePick').find('span.select2-selection--single').addClass("has-errorSelect2");
+                }
+                
                 if(theField=="#canalSelect"){
-                    console.log("canalSelect selected");
-                    $("#channelSelect").children(".select2-selection--single").css("display","none");
-                        //.css("border","1px #ff0000 solid!important");
+                    
+                    $('#channelSelect').find('span.select2-selection--single').removeClass("has-successSelect2");
+                    $('#channelSelect').find('span.select2-selection--single').addClass("has-errorSelect2");
                 }
                 
             }
         
             function okMe(theField){
+                if(theField=="#serie-id"){
+                    
+                    $('#SeriePick').find('span.select2-selection--single').addClass("has-successSelect2");
+                    $('#SeriePick').find('span.select2-selection--single').removeClass("has-errorSelect2");
+                 
+                }
+                
+                if(theField=="#canalSelect"){
+                    
+                    $('#channelSelect').find('span.select2-selection--single').addClass("has-successSelect2");
+                    $('#channelSelect').find('span.select2-selection--single').removeClass("has-errorSelect2");
+                 
+                }
                 if ($(theField).parent().hasClass('has-error')){
                     $(theField).parent().removeClass('has-error');
                 }
@@ -626,17 +557,19 @@ $( document ).ready(function() {
                     var myGirls=explodeArray(pornstars_selected,"girl_id");
                     var myCategories=explodeArray(categories_selected,"category_id");
                     var myJSON = '';
-                    myJSON+='{"Serie":{';
+                    myJSON+='{"Episode":{';
                     myJSON+='"asset_id":"'+asset_Id+'",';
                     myJSON+='"original_title":"'+original_Title+'",';
                     myJSON+='"channel_id":"'+canal_selected+'",';
                     myJSON+='"year":'+year_selected+',';
+                    myJSON+='"girls":'+myGirls+','; 
                     myJSON+='"cast":"'+elenco_selected+'",';
                     myJSON+='"directors":"'+director_selected+'",';
-                    myJSON+='"girls":'+myGirls+',';                    
-                    myJSON+='"categories":'+myCategories+',';
-                    myJSON+='"Seriemetadatas": [';
-                    myJSON+= addSerieMetadata(langDesc);
+                    myJSON+='"display_runtime": "'+display_runtimeJSON+'",';
+                    myJSON+='"serie_id": "'+serie_selected+'",';   
+                    myJSON+='"chapter": "'+chapter_selected+'",';   
+                    myJSON+='"season": "'+season_selected+'",';   
+                    myJSON+='"categories":'+myCategories+'';
                     myJSON+=']}}';
                     console.log(myJSON);
                     $("#varsToJSON").val(myJSON);
@@ -645,5 +578,5 @@ $( document ).ready(function() {
             }
         
     }
-    populateForm();
+    
 });

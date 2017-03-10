@@ -1056,6 +1056,13 @@ ul.generoPick li.placeholder {
     padding: 0px;
     border-radius: 8px;
 }
+.has-successSelect2{
+    border:1px solid #3c763d!important;
+}
+
+.has-errorSelect2{
+    border:1px solid #a94442!important;
+}
 
 #lang-container.has-error label{    
     margin-right: 30px;
